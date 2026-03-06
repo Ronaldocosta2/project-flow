@@ -11,7 +11,7 @@ const TaskList = ({ tasks }: { tasks: Task[] }) => {
           initial={{ opacity: 0, x: -8 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: i * 0.05 }}
-          className="group flex items-center gap-4 rounded-lg border border-border bg-card p-4 transition-colors hover:border-primary/20"
+          className="group flex items-center gap-4 rounded-xl border border-white/5 bg-card/40 backdrop-blur-md p-4 transition-all hover:bg-card/60 hover:border-white/20 hover:shadow-lg shadow-sm"
         >
           {/* Progress circle */}
           <div className="relative h-9 w-9 shrink-0">
@@ -38,19 +38,19 @@ const TaskList = ({ tasks }: { tasks: Task[] }) => {
 
           {/* Assignee */}
           <div className="hidden sm:flex items-center gap-2 shrink-0">
-            <div className="flex h-6 w-6 items-center justify-center rounded-full bg-secondary text-[10px] font-medium text-secondary-foreground">
+            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-secondary text-[11px] font-semibold text-secondary-foreground ring-1 ring-white/10 shadow-sm">
               {task.assignee.avatar}
             </div>
             <span className="text-xs text-muted-foreground">{task.assignee.name.split(' ')[0]}</span>
           </div>
 
           {/* Priority */}
-          <span className={cn('hidden md:inline-flex shrink-0 rounded-full px-2 py-0.5 text-[10px] font-medium', getPriorityColor(task.priority))}>
+          <span className={cn('hidden md:inline-flex shrink-0 rounded-full px-2.5 py-1 text-[10px] font-semibold tracking-wide backdrop-blur-sm shadow-sm', getPriorityColor(task.priority))}>
             {getPriorityLabel(task.priority)}
           </span>
 
           {/* Status */}
-          <span className={cn('shrink-0 rounded-full px-2.5 py-1 text-[10px] font-medium', getTaskStatusColor(task.status))}>
+          <span className={cn('shrink-0 rounded-full px-2.5 py-1 text-[10px] font-semibold tracking-wide backdrop-blur-sm shadow-sm', getTaskStatusColor(task.status))}>
             {getTaskStatusLabel(task.status)}
           </span>
 
