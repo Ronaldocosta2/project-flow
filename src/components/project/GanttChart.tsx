@@ -81,105 +81,126 @@ const GanttChart = ({ tasks, startDate, endDate }: GanttChartProps) => {
 
   return (
     <TooltipProvider delayDuration={100}>
-      <div className="rounded-xl border border-white/10 bg-card/40 backdrop-blur-md overflow-hidden shadow-2xl relative">
-        {/* Month headers */}
-        <div className="relative flex border-b border-white/10 bg-secondary/30 backdrop-blur-sm">
-          {months.map((m, i) => (
-            <div
-              key={i}
-              className="shrink-0 border-r border-border px-3 py-2 text-[10px] font-medium uppercase tracking-wider text-muted-foreground"
-              style={{ width: `${(m.width / totalDays) * 100}%` }}
-            >
-              {m.label}
+      <div className="rounded-xl border border-white/10 bg-card/40 backdrop-blur-md shadow-2xl relative flex flex-col overflow-hidden">
+
+        {/* Header Row */}
+        <div className="flex border-b border-white/10 bg-secondary/30 backdrop-blur-sm sticky top-0 z-40">
+          {/* Label Column Header */}
+          <div className="w-[180px] lg:w-[240px] shrink-0 border-r border-white/10 p-3 flex items-center bg-card/40 backdrop-blur-md z-50">
+            <span className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">Tarefa</span>
+          </div>
+
+          {/* Months Timeline Header */}
+          <div className="flex-1 overflow-hidden relative">
+            <div className="flex relative">
+              {months.map((m, i) => (
+                <div
+                  key={i}
+                  className="shrink-0 border-r border-white/10 px-3 py-2 text-[10px] font-medium uppercase tracking-wider text-muted-foreground"
+                  style={{ width: `${(m.width / totalDays) * 100}%` }}
+                >
+                  {m.label}
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
 
-        {/* Rows */}
-        <div className="relative">
-          {/* Today line */}
-          {todayOffset && (
-            <div
-              className="absolute top-0 bottom-0 w-px bg-primary/50 z-10"
-              style={{ left: todayOffset }}
-            >
-              <div className="absolute -top-0 left-1/2 -translate-x-1/2 rounded-b bg-primary px-1.5 py-0.5 text-[8px] font-bold text-primary-foreground">
-                HOJE
-              </div>
-            </div>
-          )}
-
+        {/* Content Rows */}
+        <div className="relative flex flex-col flex-1">
           {tasks.map((task, i) => {
             const pos = getBarPosition(task.startDate, task.endDate);
             return (
-              <div key={task.id} className="group relative flex items-center border-b border-border/50 hover:bg-secondary/20 transition-colors" style={{ height: 44 }}>
-                {/* Task label */}
-                <div className="absolute left-3 z-10 flex items-center gap-2 pointer-events-none">
-                  <span className="text-xs font-medium text-foreground truncate max-w-[140px] lg:max-w-[200px]">
-                    {task.title}
-                  </span>
+              <div key={task.id} className="group relative flex border-b border-white/5 hover:bg-secondary/20 transition-colors" style={{ height: 48 }}>
+
+                {/* 1. Sticky Label Column */}
+                <div className="w-[180px] lg:w-[240px] shrink-0 p-3 flex items-center border-r border-white/10 bg-card/20 backdrop-blur-sm z-30 group-hover:bg-secondary/40 transition-colors">
+                  <div className="flex items-center gap-2 truncate">
+                    <span className={cn('w-2 h-2 rounded-full shrink-0', statusColors[task.status])} />
+                    <span className="text-xs font-medium text-foreground truncate" title={task.title}>
+                      {task.title}
+                    </span>
+                  </div>
                 </div>
 
-                {/* Bar */}
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <motion.div
-                      initial={{ scaleX: 0 }}
-                      animate={{ scaleX: 1 }}
-                      transition={{ delay: i * 0.05, duration: 0.4 }}
-                      className={cn('absolute h-6 rounded-md origin-left cursor-pointer hover:ring-2 hover:ring-white/20 hover:ring-offset-1 hover:ring-offset-transparent transition-all z-20', statusColors[task.status])}
-                      style={{ left: pos.left, width: pos.width }}
-                    >
-                      {/* Progress fill */}
-                      {task.progress > 0 && task.progress < 100 && (
-                        <div
-                          className="absolute inset-y-0 left-0 rounded-l-md bg-foreground/15"
-                          style={{ width: `${task.progress}%` }}
-                        />
-                      )}
-                    </motion.div>
-                  </TooltipTrigger>
-                  <TooltipContent className="bg-background/95 backdrop-blur-xl border-white/10 shadow-2xl max-w-xs pointer-events-none p-3 z-[100]">
-                    <div className="space-y-2">
-                      <p className="font-semibold text-sm text-foreground">{task.title}</p>
-                      <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                        <span className={cn('w-2 h-2 rounded-full', statusColors[task.status])} />
-                        {getTaskStatusLabel(task.status)}
-                      </div>
+                {/* 2. Scrollable Timeline Area */}
+                <div className="flex-1 relative overflow-hidden">
 
-                      <div className="bg-secondary/50 rounded-md p-2 space-y-1.5 mt-2">
-                        <div className="flex justify-between items-center text-xs">
-                          <span className="text-muted-foreground flex items-center gap-1.5"><Calendar className="w-3 h-3" /> Início</span>
-                          <span className="font-medium text-foreground">{new Date(task.startDate).toLocaleDateString('pt-BR')}</span>
-                        </div>
-                        <div className="flex justify-between items-center text-xs">
-                          <span className="text-muted-foreground flex items-center gap-1.5"><Clock className="w-3 h-3" /> Previsto</span>
-                          <span className="font-medium text-warning">{new Date(task.predictedEndDate || task.endDate).toLocaleDateString('pt-BR')}</span>
-                        </div>
-                        <div className="flex justify-between items-center text-xs">
-                          <span className="text-muted-foreground flex items-center gap-1.5">Progresso</span>
-                          <span className="font-medium text-foreground">{task.progress}%</span>
-                        </div>
-                        {task.originalEndDate && task.originalEndDate !== task.endDate && (
-                          <div className="flex justify-between items-center text-xs pt-1.5 mt-1.5 border-t border-white/10">
-                            <span className="text-destructive flex items-center gap-1.5"><AlertCircle className="w-3 h-3" /> Original</span>
-                            <span className="font-medium text-muted-foreground line-through">{new Date(task.originalEndDate).toLocaleDateString('pt-BR')}</span>
-                          </div>
-                        )}
+                  {/* Today line (repeated per row for alignment, or could be global absolute) */}
+                  {todayOffset && i === 0 && (
+                    <div
+                      className="absolute top-0 bottom-[-1000px] w-px bg-primary/50 z-10 pointer-events-none"
+                      style={{ left: todayOffset }}
+                    >
+                      <div className="absolute -top-0 left-1/2 -translate-x-1/2 rounded-b bg-primary px-1.5 py-0.5 text-[8px] font-bold text-primary-foreground">
+                        HOJE
                       </div>
                     </div>
-                  </TooltipContent>
-                </Tooltip>
+                  )}
 
-                {/* Original End Date Marker */}
-                {task.originalEndDate && task.originalEndDate !== task.endDate && (
-                  <div
-                    className="absolute z-10 h-8 w-[2px] bg-destructive/60 -translate-y-1"
-                    style={{ left: getMarkerPosition(task.originalEndDate) }}
-                  >
-                    <div className="absolute -top-3 -left-1.5 h-3 w-3 rotate-45 border-t-2 border-l-2 border-destructive/60 bg-background" />
+                  <div className="absolute inset-y-0 left-0 right-0 py-2.5">
+                    {/* Bar */}
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <motion.div
+                          initial={{ scaleX: 0 }}
+                          animate={{ scaleX: 1 }}
+                          transition={{ delay: i * 0.05, duration: 0.4 }}
+                          className={cn('absolute h-full rounded-md origin-left cursor-pointer hover:ring-2 hover:ring-white/20 hover:ring-offset-1 hover:ring-offset-transparent transition-all z-20', statusColors[task.status])}
+                          style={{ left: pos.left, width: pos.width }}
+                        >
+                          {/* Progress fill */}
+                          {task.progress > 0 && task.progress < 100 && (
+                            <div
+                              className="absolute inset-y-0 left-0 rounded-l-md bg-foreground/15"
+                              style={{ width: `${task.progress}%` }}
+                            />
+                          )}
+                        </motion.div>
+                      </TooltipTrigger>
+                      <TooltipContent className="bg-background/95 backdrop-blur-xl border-white/10 shadow-2xl max-w-xs pointer-events-none p-3 z-[100]">
+                        <div className="space-y-2">
+                          <p className="font-semibold text-sm text-foreground">{task.title}</p>
+                          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                            <span className={cn('w-2 h-2 rounded-full', statusColors[task.status])} />
+                            {getTaskStatusLabel(task.status)}
+                          </div>
+
+                          <div className="bg-secondary/50 rounded-md p-2 space-y-1.5 mt-2">
+                            <div className="flex justify-between items-center text-xs">
+                              <span className="text-muted-foreground flex items-center gap-1.5"><Calendar className="w-3 h-3" /> Início</span>
+                              <span className="font-medium text-foreground">{new Date(task.startDate).toLocaleDateString('pt-BR')}</span>
+                            </div>
+                            <div className="flex justify-between items-center text-xs">
+                              <span className="text-muted-foreground flex items-center gap-1.5"><Clock className="w-3 h-3" /> Previsto</span>
+                              <span className="font-medium text-warning">{new Date(task.predictedEndDate || task.endDate).toLocaleDateString('pt-BR')}</span>
+                            </div>
+                            <div className="flex justify-between items-center text-xs">
+                              <span className="text-muted-foreground flex items-center gap-1.5">Progresso</span>
+                              <span className="font-medium text-foreground">{task.progress}%</span>
+                            </div>
+                            {task.originalEndDate && task.originalEndDate !== task.endDate && (
+                              <div className="flex justify-between items-center text-xs pt-1.5 mt-1.5 border-t border-white/10">
+                                <span className="text-destructive flex items-center gap-1.5"><AlertCircle className="w-3 h-3" /> Original</span>
+                                <span className="font-medium text-muted-foreground line-through">{new Date(task.originalEndDate).toLocaleDateString('pt-BR')}</span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </TooltipContent>
+                    </Tooltip>
+
+                    {/* Original End Date Marker */}
+                    {task.originalEndDate && task.originalEndDate !== task.endDate && (
+                      <div
+                        className="absolute top-1/2 -translate-y-1/2 z-10 h-[120%] w-[2px] bg-destructive/60"
+                        style={{ left: getMarkerPosition(task.originalEndDate) }}
+                      >
+                        <div className="absolute -top-1 -left-1 h-2.5 w-2.5 rotate-45 border-t-2 border-l-2 border-destructive/60 bg-background" />
+                      </div>
+                    )}
                   </div>
-                )}
+                </div>
               </div>
             );
           })}
