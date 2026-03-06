@@ -20,6 +20,8 @@ export interface Task {
   priority: TaskPriority;
   startDate: string;
   endDate: string;
+  originalEndDate?: string;
+  predictedEndDate?: string;
   progress: number;
   dependencies?: string[];
 }
@@ -73,7 +75,11 @@ const makeTasks = (projectId: string): Task[] => {
       { id: 't15', projectId: '4', title: 'Prototipação', description: 'Protótipo de alta fidelidade', assignee: teamMembers[2], status: 'todo', priority: 'medium', startDate: '2026-03-15', endDate: '2026-04-01', progress: 0, dependencies: ['t14'] },
     ],
   };
-  return taskSets[projectId] || [];
+  const tasks = taskSets[projectId] || [];
+  return tasks.map(t => ({
+    ...t,
+    originalEndDate: t.endDate,
+  }));
 };
 
 export const projects: Project[] = [

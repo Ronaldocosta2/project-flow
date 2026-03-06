@@ -11,16 +11,21 @@ interface GanttChartProps {
 
 const GanttChart = ({ tasks, startDate, endDate }: GanttChartProps) => {
   const { chartStart, chartEnd, totalDays, months } = useMemo(() => {
-    const allDates = tasks.flatMap(t => [new Date(t.startDate), new Date(t.endDate)]);
+    const allDates = tasks.flatMap(t => [
+      new Date(t.startDate),
+      new Date(t.endDate),
+      t.originalEndDate ? new Date(t.originalEndDate) : new Date(t.endDate),
+      t.predictedEndDate ? new Date(t.predictedEndDate) : new Date(t.endDate)
+    ]);
     const s = startDate ? new Date(startDate) : new Date(Math.min(...allDates.map(d => d.getTime())));
     const e = endDate ? new Date(endDate) : new Date(Math.max(...allDates.map(d => d.getTime())));
-    
+
     // Add padding
     s.setDate(s.getDate() - 3);
     e.setDate(e.getDate() + 3);
 
     const total = Math.ceil((e.getTime() - s.getTime()) / (1000 * 60 * 60 * 24));
-    
+
     // Generate month labels
     const monthsList: { label: string; offset: number; width: number }[] = [];
     const curr = new Date(s);
@@ -50,6 +55,12 @@ const GanttChart = ({ tasks, startDate, endDate }: GanttChartProps) => {
       left: `${(left / totalDays) * 100}%`,
       width: `${(width / totalDays) * 100}%`,
     };
+  };
+
+  const getMarkerPosition = (dateStr: string) => {
+    const d = new Date(dateStr);
+    const left = Math.max(0, (d.getTime() - chartStart.getTime()) / (1000 * 60 * 60 * 24));
+    return `${(left / totalDays) * 100}%`;
   };
 
   const todayOffset = useMemo(() => {
@@ -122,6 +133,17 @@ const GanttChart = ({ tasks, startDate, endDate }: GanttChartProps) => {
                   />
                 )}
               </motion.div>
+
+              {/* Original End Date Marker */}
+              {task.originalEndDate && task.originalEndDate !== task.endDate && (
+                <div
+                  className="absolute z-20 h-8 w-[2px] bg-destructive/80 -translate-y-1"
+                  style={{ left: getMarkerPosition(task.originalEndDate) }}
+                  title={`Prazo Original: ${new Date(task.originalEndDate).toLocaleDateString('pt-BR')}`}
+                >
+                  <div className="absolute -top-3 -left-1.5 h-3 w-3 rotate-45 border-t-2 border-l-2 border-destructive/80 bg-background" />
+                </div>
+              )}
             </div>
           );
         })}

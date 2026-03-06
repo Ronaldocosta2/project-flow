@@ -55,9 +55,22 @@ const TaskList = ({ tasks }: { tasks: Task[] }) => {
           </span>
 
           {/* Dates */}
-          <span className="hidden lg:block shrink-0 text-xs text-muted-foreground w-20 text-right">
-            {new Date(task.endDate).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' })}
-          </span>
+          <div className="hidden lg:flex flex-col items-end shrink-0 w-24">
+            {task.predictedEndDate && task.predictedEndDate !== task.originalEndDate ? (
+              <>
+                <span className="text-xs font-medium text-warning">
+                  {new Date(task.predictedEndDate).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' })}
+                </span>
+                <span className="text-[10px] text-muted-foreground line-through">
+                  {new Date(task.originalEndDate || task.endDate).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' })}
+                </span>
+              </>
+            ) : (
+              <span className="text-xs text-muted-foreground">
+                {new Date(task.endDate).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' })}
+              </span>
+            )}
+          </div>
         </motion.div>
       ))}
     </div>

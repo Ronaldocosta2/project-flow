@@ -6,13 +6,18 @@ import TaskList from '@/components/project/TaskList';
 import GanttChart from '@/components/project/GanttChart';
 import { projects, getStatusBg, getStatusLabel } from '@/data/mockData';
 import { cn } from '@/lib/utils';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
+import { recalculateSchedule } from '@/lib/schedule';
 
 const ProjectDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const project = projects.find(p => p.id === id);
   const [view, setView] = useState<'tasks' | 'gantt'>('tasks');
+
+  const recalculatedTasks = useMemo(() => {
+    return project ? recalculateSchedule(project.tasks) : [];
+  }, [project]);
 
   if (!project) {
     return (
@@ -89,9 +94,9 @@ const ProjectDetail = () => {
 
       {/* Content */}
       {view === 'tasks' ? (
-        <TaskList tasks={project.tasks} />
+        <TaskList tasks={recalculatedTasks} />
       ) : (
-        <GanttChart tasks={project.tasks} startDate={project.startDate} endDate={project.endDate} />
+        <GanttChart tasks={recalculatedTasks} startDate={project.startDate} endDate={project.endDate} />
       )}
     </AppLayout>
   );
