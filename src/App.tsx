@@ -10,6 +10,8 @@ import Timeline from "./pages/Timeline";
 import Team from "./pages/Team";
 import NotFound from "./pages/NotFound";
 
+import Landing from "./pages/Landing";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -19,7 +21,8 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Index />} />
+          <Route path="/" element={<Landing />} />
+          <Route path="/dashboard" element={<Index />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/projects/:id" element={<ProjectDetail />} />
           <Route path="/timeline" element={<Timeline />} />
