@@ -39,7 +39,7 @@ const Landing = () => {
         <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight max-w-4xl mx-auto mb-6 leading-tight">
           O controle total dos seus projetos nunca foi tão <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-600">acessível</span>
         </h1>
-        
+
         <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto mb-10">
           Gerencie tarefas, equipes e prazos em uma plataforma moderna e intuitiva. Pare de perder o controle.
         </p>
@@ -70,7 +70,7 @@ const Landing = () => {
                 </li>
               ))}
             </ul>
-            <Button size="lg" className="w-full text-lg h-14" onClick={() => navigate('/dashboard')}>
+            <Button size="lg" className="w-full text-lg h-14" onClick={() => window.open('https://invoice.infinitepay.io/plans/romcosta/IMULWZ2o3', '_blank')}>
               Garantir Minha Vaga <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
             <p className="text-xs text-muted-foreground mt-4 text-center">
@@ -86,7 +86,7 @@ const Landing = () => {
           <h2 className="text-3xl font-bold mb-4">Por que escolher o Project Flow?</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">Tudo que você precisa para levar a produtividade da sua equipe para o próximo nível.</p>
         </div>
-        
+
         <div className="grid md:grid-cols-3 gap-8">
           {[
             {
@@ -130,12 +130,12 @@ const Landing = () => {
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-10">
             Aproveite a oferta de inauguração e junte-se aos primeiros usuários do sistema.
           </p>
-          <Button size="lg" className="h-14 px-8 text-lg" onClick={() => navigate('/dashboard')}>
+          <Button size="lg" className="h-14 px-8 text-lg" onClick={() => window.open('https://invoice.infinitepay.io/plans/romcosta/IMULWZ2o3', '_blank')}>
             Criar Conta Agora - R$ 5,00/mês
           </Button>
         </div>
       </section>
-      
+
       {/* Footer mini */}
       <footer className="border-t py-8 text-center text-muted-foreground text-sm">
         <p>© 2026 Project Flow. Todos os direitos reservados.</p>
