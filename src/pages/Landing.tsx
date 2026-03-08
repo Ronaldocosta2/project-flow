@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, CheckCircle2, Zap, Shield, BarChart3, Rocket } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import SignupPopup from '@/components/SignupPopup';
 
 const Landing = () => {
   const navigate = useNavigate();
