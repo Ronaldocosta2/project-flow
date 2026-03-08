@@ -70,7 +70,7 @@ const Landing = () => {
                 </li>
               ))}
             </ul>
-            <Button size="lg" className="w-full text-lg h-14" onClick={() => window.open('https://invoice.infinitepay.io/plans/romcosta/IMULWZ2o3', '_blank')}>
+            <Button size="lg" className="w-full text-lg h-14" onClick={() => window.open('https://buy.stripe.com/eVq8wIbA3bCGbK9aztgjC00', '_blank')}>
               Garantir Minha Vaga <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
             <p className="text-xs text-muted-foreground mt-4 text-center">
@@ -130,7 +130,7 @@ const Landing = () => {
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-10">
             Aproveite a oferta de inauguração e junte-se aos primeiros usuários do sistema.
           </p>
-          <Button size="lg" className="h-14 px-8 text-lg" onClick={() => window.open('https://invoice.infinitepay.io/plans/romcosta/IMULWZ2o3', '_blank')}>
+          <Button size="lg" className="h-14 px-8 text-lg" onClick={() => window.open('https://buy.stripe.com/eVq8wIbA3bCGbK9aztgjC00', '_blank')}>
             Criar Conta Agora - R$ 5,00/mês
           </Button>
         </div>
