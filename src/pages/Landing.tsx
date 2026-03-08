@@ -53,7 +53,7 @@ const Landing = () => {
             </div>
             <h3 className="text-2xl font-bold mb-2">Plano de Inauguração</h3>
             <div className="flex items-baseline justify-center gap-1 mb-6">
-              <span className="text-4xl font-extrabold text-primary">R$ 5,00</span>
+              <span className="text-4xl font-extrabold text-primary">R$ 29,90</span>
               <span className="text-sm font-medium text-muted-foreground">/mês</span>
             </div>
             <ul className="text-left space-y-3 mb-8">
