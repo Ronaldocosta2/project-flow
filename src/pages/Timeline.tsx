@@ -12,7 +12,7 @@ const Timeline = () => {
         <p className="mt-1 text-sm text-muted-foreground">Visão consolidada de todas as tarefas ativas</p>
       </div>
 
-      <GanttChart tasks={allTasks} />
+      <GanttChart />
     </AppLayout>
   );
 };

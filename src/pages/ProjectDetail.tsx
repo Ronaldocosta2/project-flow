@@ -96,7 +96,7 @@ const ProjectDetail = () => {
       {view === 'tasks' ? (
         <TaskList tasks={recalculatedTasks} />
       ) : (
-        <GanttChart tasks={recalculatedTasks} startDate={project.startDate} endDate={project.endDate} />
+        <GanttChart />
       )}
     </AppLayout>
   );
