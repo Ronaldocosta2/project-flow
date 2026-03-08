@@ -70,7 +70,7 @@ const Landing = () => {
                 </li>
               ))}
             </ul>
-            <Button size="lg" className="w-full text-lg h-14" onClick={() => window.open('https://invoice.infinitepay.io/plans/romcosta/IMULWZ2o3', '_blank')}>
+            <Button size="lg" className="w-full text-lg h-14" onClick={() => window.open('https://buy.stripe.com/eVq8wIbA3bCGbK9aztgjC00', '_blank')}>
               Garantir Minha Vaga <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
             <p className="text-xs text-muted-foreground mt-4 text-center">
