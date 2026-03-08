@@ -2,13 +2,14 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, CheckCircle2, Zap, Shield, BarChart3, Rocket } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import SignupPopup from '@/components/SignupPopup';
 
 const Landing = () => {
   const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col font-sans">
-      {/* Header */}
+      <SignupPopup />
       <header className="container mx-auto px-4 py-6 flex justify-between items-center z-10 relative">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground font-bold">
