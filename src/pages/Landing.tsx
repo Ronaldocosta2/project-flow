@@ -9,7 +9,7 @@ const Landing = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col font-sans">
-      {/* Header */}
+      <SignupPopup />
       <header className="container mx-auto px-4 py-6 flex justify-between items-center z-10 relative">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground font-bold">
