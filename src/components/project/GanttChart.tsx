@@ -150,8 +150,41 @@ const inputStyle = {
 };
 
 // ═══════════════════════════════════════════════════════════════════════════════
+function recalcularCronograma(fases) {
+  let changed = true;
+  let currentFases = [...fases];
+  // Simple iteration to avoid infinite loops, max 100 passes
+  let pass = 0;
+  while (changed && pass < 100) {
+    changed = false;
+    pass++;
+    currentFases = currentFases.map(f => {
+      if (!f.deps || f.deps.length === 0) return f;
+      const prevFases = currentFases.filter(pf => f.deps.includes(pf.id));
+      if (prevFases.length === 0) return f;
+      const maxDepFim = new Date(Math.max(...prevFases.map(pf => pf.fim)));
+      // allow next phase to start on the next day
+      const expectedInicio = addDays(maxDepFim, 1);
+      if (f.inicio < expectedInicio) {
+        const diff = diffDays(f.inicio, expectedInicio);
+        if (diff > 0) {
+          changed = true;
+          const newTarefas = f.tarefas.map(t => ({ ...t, inicio: addDays(t.inicio, diff), fim: addDays(t.fim, diff) }));
+          return { ...f, inicio: addDays(f.inicio, diff), fim: addDays(f.fim, diff), tarefas: newTarefas };
+        }
+      }
+      return f;
+    });
+  }
+  return currentFases;
+}
+
 export default function GanttPro() {
-  const [fases, setFases] = useState(FASES_INIT);
+  const FASES_INIT_DATES = FASES_INIT.map(f => ({
+  ...f,
+  tarefas: f.tarefas.map(t => ({...t, inicio: new Date(f.inicio), fim: new Date(f.fim), baseInicio: new Date(f.baseInicio), baseFim: new Date(f.baseFim)}))
+}));
+  const [fases, setFases] = useState(FASES_INIT_DATES);
   const [zoomIdx, setZoomIdx] = useState(2);
   const [fullscreen, setFullscreen] = useState(false);
   const [showDeps, setShowDeps] = useState(true);
