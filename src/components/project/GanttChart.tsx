@@ -124,11 +124,11 @@ function detectAlertas(fases) {
 // ─── Modal genérico ────────────────────────────────────────────────────────────
 function Modal({ title, onClose, children }) {
   return (
-    <div style={{ position: "fixed", inset: 0, background: "#00000088", zIndex: 9998, display: "flex", alignItems: "center", justifyContent: "center" }}>
-      <div style={{ background: "#0f1a2e", border: "1px solid #1e2d40", borderRadius: 14, padding: 24, minWidth: 380, maxWidth: 520, width: "90%" }}>
+    <div style={{ position: "fixed", inset: 0, background: "var(--bg-overlay, #00000088)", zIndex: 9998, display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <div style={{ background: "var(--bg-modal, #0f1a2e)", border: "1px solid #1e2d40", borderRadius: 14, padding: 24, minWidth: 380, maxWidth: 520, width: "90%" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 18 }}>
-          <span style={{ fontSize: 15, fontWeight: 800, color: "#f1f5f9" }}>{title}</span>
-          <button onClick={onClose} style={{ background: "none", border: "none", color: "#64748b", fontSize: 18, cursor: "pointer" }}>✕</button>
+          <span style={{ fontSize: 15, fontWeight: 800, color: "var(--text-title, #f1f5f9)" }}>{title}</span>
+          <button onClick={onClose} style={{ background: "none", border: "none", color: "var(--text-muted, #64748b)", fontSize: 18, cursor: "pointer" }}>✕</button>
         </div>
         {children}
       </div>
@@ -139,14 +139,14 @@ function Modal({ title, onClose, children }) {
 function Field({ label, children }) {
   return (
     <div style={{ marginBottom: 14 }}>
-      <div style={{ fontSize: 10, color: "#475569", fontWeight: 700, textTransform: "uppercase", letterSpacing: "1px", marginBottom: 5 }}>{label}</div>
+      <div style={{ fontSize: 10, color: "var(--text-dark, #475569)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "1px", marginBottom: 5 }}>{label}</div>
       {children}
     </div>
   );
 }
 const inputStyle = {
-  width: "100%", background: "#0b1120", border: "1px solid #1e2d40", borderRadius: 8,
-  padding: "8px 10px", color: "#e2e8f0", fontSize: 13, boxSizing: "border-box",
+  width: "100%", background: "var(--bg-top, #0b1120)", border: "1px solid #1e2d40", borderRadius: 8,
+  padding: "8px 10px", color: "var(--text-main, #e2e8f0)", fontSize: 13, boxSizing: "border-box",
 };
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -285,8 +285,8 @@ export default function GanttPro() {
 
   // ── Layout ────────────────────────────────────────────────────────────────
   const wrap = fullscreen
-    ? { position: "fixed", inset: 0, zIndex: 9999, background: "#070d1a", display: "flex", flexDirection: "column", fontFamily: "'DM Mono','Courier New',monospace" }
-    : { background: "#070d1a", minHeight: "100vh", color: "#e2e8f0", fontFamily: "'DM Mono','Courier New',monospace" };
+    ? { position: "fixed", inset: 0, zIndex: 9999, background: "var(--bg-app, #070d1a)", display: "flex", flexDirection: "column", fontFamily: "'DM Mono','Courier New',monospace" }
+    : { background: "var(--bg-app, #070d1a)", minHeight: "100vh", color: "var(--text-main, #e2e8f0)", fontFamily: "'DM Mono','Courier New',monospace" };
 
   const LEFT_W = 230;
 
@@ -294,36 +294,36 @@ export default function GanttPro() {
     <div style={wrap}>
 
       {/* ── TOPBAR ── */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 20px", background: "#0b1120", borderBottom: "1px solid #1e2d40", flexShrink: 0, flexWrap: "wrap", gap: 8 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 20px", background: "var(--bg-top, #0b1120)", borderBottom: "1px solid #1e2d40", flexShrink: 0, flexWrap: "wrap", gap: 8 }}>
         <div>
           <div style={{ fontSize: 9, color: "#3b82f6", fontWeight: 700, letterSpacing: "3px", textTransform: "uppercase" }}>CRONOGRAMA · GANTT PRO v2</div>
-          <div style={{ fontSize: 17, fontWeight: 800, color: "#f1f5f9", letterSpacing: "-0.5px" }}>Solar BPM — Implantação v2</div>
+          <div style={{ fontSize: 17, fontWeight: 800, color: "var(--text-title, #f1f5f9)", letterSpacing: "-0.5px" }}>Solar BPM — Implantação v2</div>
         </div>
 
         <div style={{ display: "flex", gap: 6, flexWrap: "wrap", alignItems: "center" }}>
           {/* Progresso */}
           <div style={{ textAlign: "right", marginRight: 4 }}>
-            <div style={{ fontSize: 9, color: "#475569" }}>Progresso geral</div>
+            <div style={{ fontSize: 9, color: "var(--text-dark, #475569)" }}>Progresso geral</div>
             <div style={{ fontSize: 20, fontWeight: 800, color: "#22c55e" }}>{progressoGeral}%</div>
           </div>
 
           {/* Alertas badge */}
           <button onClick={() => setShowAlertas(true)} style={{
-            padding: "7px 12px", borderRadius: 8, border: `1px solid ${alertas.length ? "#ef444455" : "#1e2d40"}`,
-            background: alertas.length ? "#2d0a0a" : "transparent",
-            color: alertas.length ? "#ef4444" : "#475569",
+            padding: "7px 12px", borderRadius: 8, border: `1px solid ${alertas.length ? "#ef444455" : "var(--border-main, #1e2d40)"}`,
+            background: alertas.length ? "var(--bg-alert, #2d0a0a)" : "transparent",
+            color: alertas.length ? "#ef4444" : "var(--text-dark, #475569)",
             fontSize: 11, fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", gap: 5,
           }}>
             ⚠ {alertas.length} alerta{alertas.length !== 1 ? "s" : ""}
           </button>
 
           {/* Zoom */}
-          <div style={{ display: "flex", gap: 2, background: "#0f1a2e", borderRadius: 8, padding: 3, border: "1px solid #1e2d40" }}>
+          <div style={{ display: "flex", gap: 2, background: "var(--bg-modal, #0f1a2e)", borderRadius: 8, padding: 3, border: "1px solid #1e2d40" }}>
             {ZOOM_LEVELS.map((z, i) => (
               <button key={z.label} onClick={() => setZoomIdx(i)} style={{
                 padding: "5px 11px", borderRadius: 6, border: "none",
                 background: i === zoomIdx ? "#1d4ed8" : "transparent",
-                color: i === zoomIdx ? "#fff" : "#64748b",
+                color: i === zoomIdx ? "#fff" : "var(--text-muted, #64748b)",
                 fontSize: 11, fontWeight: 700, cursor: "pointer",
               }}>{z.label}</button>
             ))}
@@ -335,9 +335,9 @@ export default function GanttPro() {
             { label: "◫ Baseline", val: showBase, set: setShowBase, color: "#60a5fa" },
           ].map(t => (
             <button key={t.label} onClick={() => t.set(v => !v)} style={{
-              padding: "7px 12px", borderRadius: 8, border: `1px solid ${t.val ? t.color + "55" : "#1e2d40"}`,
+              padding: "7px 12px", borderRadius: 8, border: `1px solid ${t.val ? t.color + "55" : "var(--border-main, #1e2d40)"}`,
               background: t.val ? t.color + "11" : "transparent",
-              color: t.val ? t.color : "#475569",
+              color: t.val ? t.color : "var(--text-dark, #475569)",
               fontSize: 11, fontWeight: 700, cursor: "pointer",
             }}>{t.label}</button>
           ))}
@@ -351,14 +351,14 @@ export default function GanttPro() {
           {/* Fullscreen */}
           <button onClick={() => setFullscreen(v => !v)} style={{
             padding: "7px 12px", borderRadius: 8, border: "1px solid #1e2d40",
-            background: "transparent", color: "#64748b", fontSize: 14, cursor: "pointer",
+            background: "transparent", color: "var(--text-muted, #64748b)", fontSize: 14, cursor: "pointer",
           }}>{fullscreen ? "⊠" : "⛶"}</button>
         </div>
       </div>
 
       {/* ── FILTROS ── */}
-      <div style={{ display: "flex", gap: 10, padding: "10px 20px", background: "#0b1120", borderBottom: "1px solid #1e2d40", flexShrink: 0, alignItems: "center" }}>
-        <span style={{ fontSize: 10, color: "#475569", fontWeight: 700, textTransform: "uppercase", letterSpacing: "1px" }}>Filtrar:</span>
+      <div style={{ display: "flex", gap: 10, padding: "10px 20px", background: "var(--bg-top, #0b1120)", borderBottom: "1px solid #1e2d40", flexShrink: 0, alignItems: "center" }}>
+        <span style={{ fontSize: 10, color: "var(--text-dark, #475569)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "1px" }}>Filtrar:</span>
         <select value={filterResp} onChange={e => setFilterResp(e.target.value)} style={{ ...inputStyle, width: "auto", padding: "5px 10px", fontSize: 11 }}>
           {resps.map(r => <option key={r}>{r}</option>)}
         </select>
@@ -370,14 +370,14 @@ export default function GanttPro() {
             background: "none", border: "none", color: "#ef4444", fontSize: 11, cursor: "pointer", fontWeight: 700,
           }}>✕ Limpar</button>
         )}
-        <span style={{ marginLeft: "auto", fontSize: 10, color: "#475569" }}>{fasesFiltradas.length} fase{fasesFiltradas.length !== 1 ? "s" : ""} exibida{fasesFiltradas.length !== 1 ? "s" : ""}</span>
+        <span style={{ marginLeft: "auto", fontSize: 10, color: "var(--text-dark, #475569)" }}>{fasesFiltradas.length} fase{fasesFiltradas.length !== 1 ? "s" : ""} exibida{fasesFiltradas.length !== 1 ? "s" : ""}</span>
       </div>
 
       {/* ── GANTT BODY ── */}
       <div style={{ display: "flex", flex: 1, overflow: "hidden", margin: "12px 20px 16px" }}>
 
         {/* Coluna de nomes */}
-        <div style={{ width: LEFT_W, flexShrink: 0, background: "#0b1120", border: "1px solid #1e2d40", borderRight: "none", borderRadius: "10px 0 0 10px", display: "flex", flexDirection: "column", overflowY: "auto" }}>
+        <div style={{ width: LEFT_W, flexShrink: 0, background: "var(--bg-top, #0b1120)", border: "1px solid #1e2d40", borderRight: "none", borderRadius: "10px 0 0 10px", display: "flex", flexDirection: "column", overflowY: "auto" }}>
           <div style={{ height: 34, borderBottom: "1px solid #1e2d40", flexShrink: 0 }} />
           {fasesFiltradas.map((f, i) => {
             const s = STATUS_MAP[f.status];
@@ -388,23 +388,23 @@ export default function GanttPro() {
                 <div style={{
                   height: ROW_H, borderBottom: "1px solid #0f172a", display: "flex",
                   alignItems: "center", padding: "0 10px", gap: 6,
-                  background: selected === f.id ? "#0f1f35" : i % 2 === 0 ? "#0b1120" : "#0d1528",
+                  background: selected === f.id ? "var(--bg-row-sel, #0f1f35)" : i % 2 === 0 ? "var(--bg-top, #0b1120)" : "var(--bg-row-alt, #0d1528)",
                   cursor: "pointer",
                 }} onClick={() => setSelected(f.id === selected ? null : f.id)}>
                   <button onClick={e => { e.stopPropagation(); setExpanded(p => ({ ...p, [f.id]: !p[f.id] })) }}
-                    style={{ background: "none", border: "none", color: "#475569", cursor: "pointer", fontSize: 9, padding: "2px 3px", flexShrink: 0 }}>
+                    style={{ background: "none", border: "none", color: "var(--text-dark, #475569)", cursor: "pointer", fontSize: 9, padding: "2px 3px", flexShrink: 0 }}>
                     {isExp ? "▼" : "▶"}
                   </button>
                   <div style={{ width: 7, height: 7, borderRadius: "50%", background: f.cor, flexShrink: 0 }} />
                   <div style={{ flex: 1, overflow: "hidden" }}>
-                    <div style={{ fontSize: 11, fontWeight: 700, color: "#e2e8f0", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                    <div style={{ fontSize: 11, fontWeight: 700, color: "var(--text-main, #e2e8f0)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                       {hasAlert && <span style={{ color: "#f59e0b", marginRight: 4 }}>⚠</span>}
                       {f.nome}
                     </div>
-                    <div style={{ fontSize: 9, color: "#475569" }}>{f.resp} · {f.progresso}%</div>
+                    <div style={{ fontSize: 9, color: "var(--text-dark, #475569)" }}>{f.resp} · {f.progresso}%</div>
                   </div>
                   <div style={{ display: "flex", gap: 3, flexShrink: 0 }}>
-                    <button onClick={e => { e.stopPropagation(); setModalFase(f) }} style={{ background: "none", border: "none", color: "#475569", cursor: "pointer", fontSize: 11, padding: "2px" }} title="Editar">✏</button>
+                    <button onClick={e => { e.stopPropagation(); setModalFase(f) }} style={{ background: "none", border: "none", color: "var(--text-dark, #475569)", cursor: "pointer", fontSize: 11, padding: "2px" }} title="Editar">✏</button>
                     <button onClick={e => { e.stopPropagation(); setModalTarefa({ faseId: f.id, tarefa: null }) }} style={{ background: "none", border: "none", color: "#3b82f6", cursor: "pointer", fontSize: 12, padding: "2px" }} title="Nova tarefa">+</button>
                   </div>
                 </div>
@@ -416,13 +416,13 @@ export default function GanttPro() {
                     <div key={t.id} style={{
                       height: 32, borderBottom: "1px solid #070d1a", display: "flex",
                       alignItems: "center", padding: "0 10px 0 28px", gap: 6,
-                      background: "#060c18",
+                      background: "var(--bg-task, #060c18)",
                     }}>
                       <div style={{ flex: 1, overflow: "hidden" }}>
-                        <div style={{ fontSize: 10, color: "#94a3b8", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>└ {t.nome}</div>
+                        <div style={{ fontSize: 10, color: "var(--text-muted, #94a3b8)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>└ {t.nome}</div>
                       </div>
                       <span style={{ fontSize: 9, padding: "1px 5px", borderRadius: 4, background: ts.color + "22", color: ts.color, whiteSpace: "nowrap" }}>{ts.label}</span>
-                      <button onClick={() => setModalTarefa({ faseId: f.id, tarefa: t })} style={{ background: "none", border: "none", color: "#475569", cursor: "pointer", fontSize: 10 }}>✏</button>
+                      <button onClick={() => setModalTarefa({ faseId: f.id, tarefa: t })} style={{ background: "none", border: "none", color: "var(--text-dark, #475569)", cursor: "pointer", fontSize: 10 }}>✏</button>
                       <button onClick={() => deleteTarefa(f.id, t.id)} style={{ background: "none", border: "none", color: "#ef444488", cursor: "pointer", fontSize: 10 }}>✕</button>
                     </div>
                   );
@@ -437,12 +437,12 @@ export default function GanttPro() {
           <div style={{ width: canvasW, minWidth: "100%", position: "relative" }}>
 
             {/* Header datas */}
-            <div style={{ height: 34, display: "flex", borderBottom: "1px solid #1e2d40", background: "#0b1120", position: "sticky", top: 0, zIndex: 10 }}>
+            <div style={{ height: 34, display: "flex", borderBottom: "1px solid #1e2d40", background: "var(--bg-top, #0b1120)", position: "sticky", top: 0, zIndex: 10 }}>
               {headerCells.map((cell, i) => (
                 <div key={i} style={{
                   width: zoom.cellPx, flexShrink: 0, borderRight: "1px solid #0f172a",
                   display: "flex", alignItems: "center", justifyContent: "center",
-                  fontSize: 8, color: "#475569", fontWeight: 700,
+                  fontSize: 8, color: "var(--text-dark, #475569)", fontWeight: 700,
                 }}>
                   {zoom.fmt(cell)}
                 </div>
@@ -463,10 +463,10 @@ export default function GanttPro() {
                 <div key={f.id}>
                   <div style={{
                     height: ROW_H, borderBottom: "1px solid #0f172a",
-                    background: selected === f.id ? "#0f1f3533" : i % 2 === 0 ? "transparent" : "#0d152811",
+                    background: selected === f.id ? "var(--bg-row-sel-tr, #0f1f3533)" : i % 2 === 0 ? "transparent" : "var(--bg-row-alt-tr, #0d152811)",
                   }} />
                   {expanded[f.id] && f.tarefas.map(t => (
-                    <div key={t.id} style={{ height: 32, borderBottom: "1px solid #070d1a", background: "#060c1888" }} />
+                    <div key={t.id} style={{ height: 32, borderBottom: "1px solid #070d1a", background: "var(--bg-task-tr, #060c1888)" }} />
                   ))}
                 </div>
               ))}
@@ -563,16 +563,16 @@ export default function GanttPro() {
         {Object.entries(STATUS_MAP).map(([k, v]) => (
           <div key={k} style={{ display: "flex", alignItems: "center", gap: 5 }}>
             <div style={{ width: 8, height: 8, borderRadius: 2, background: v.color }} />
-            <span style={{ fontSize: 9, color: "#475569" }}>{v.label}</span>
+            <span style={{ fontSize: 9, color: "var(--text-dark, #475569)" }}>{v.label}</span>
           </div>
         ))}
         {showBase && (
           <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
             <div style={{ width: 16, height: 4, border: "1px dashed #60a5fa88", borderRadius: 2 }} />
-            <span style={{ fontSize: 9, color: "#475569" }}>Baseline</span>
+            <span style={{ fontSize: 9, color: "var(--text-dark, #475569)" }}>Baseline</span>
           </div>
         )}
-        <span style={{ fontSize: 9, color: "#1e2d40", marginLeft: "auto" }}>Arraste barras para mover · bordas para redimensionar</span>
+        <span style={{ fontSize: 9, color: "var(--border-main, #1e2d40)", marginLeft: "auto" }}>Arraste barras para mover · bordas para redimensionar</span>
       </div>
 
       {/* ── TOOLTIP ── */}
@@ -580,10 +580,10 @@ export default function GanttPro() {
         const f = fases.find(x => x.id === tooltip.faseId); if (!f) return null;
         const atrasoDias = diffDays(f.baseFim, f.fim);
         return (
-          <div style={{ position: "fixed", left: tooltip.x + 12, top: tooltip.y - 10, background: "#0f1a2e", border: `1px solid ${f.cor}55`, borderRadius: 8, padding: "8px 12px", pointerEvents: "none", zIndex: 9999 }}>
+          <div style={{ position: "fixed", left: tooltip.x + 12, top: tooltip.y - 10, background: "var(--bg-modal, #0f1a2e)", border: `1px solid ${f.cor}55`, borderRadius: 8, padding: "8px 12px", pointerEvents: "none", zIndex: 9999 }}>
             <div style={{ fontSize: 12, fontWeight: 800, color: f.cor }}>{f.nome}</div>
-            <div style={{ fontSize: 10, color: "#94a3b8", marginTop: 2 }}>{fmtFull(f.inicio)} → {fmtFull(f.fim)}</div>
-            <div style={{ fontSize: 10, color: "#64748b" }}>{diffDays(f.inicio, f.fim) + 1} dias · {f.progresso}% · {f.resp}</div>
+            <div style={{ fontSize: 10, color: "var(--text-muted, #94a3b8)", marginTop: 2 }}>{fmtFull(f.inicio)} → {fmtFull(f.fim)}</div>
+            <div style={{ fontSize: 10, color: "var(--text-muted, #64748b)" }}>{diffDays(f.inicio, f.fim) + 1} dias · {f.progresso}% · {f.resp}</div>
             {showBase && <div style={{ fontSize: 10, color: atrasoDias > 0 ? "#ef4444" : "#22c55e", marginTop: 2 }}>
               {atrasoDias > 0 ? `⚠ +${atrasoDias}d vs baseline` : "✓ Dentro da baseline"}
             </div>}
@@ -603,7 +603,7 @@ export default function GanttPro() {
               </div>
             ))
           }
-          <button onClick={() => setShowAlertas(false)} style={{ width: "100%", marginTop: 12, padding: "9px", borderRadius: 8, border: "1px solid #1e2d40", background: "#0b1120", color: "#64748b", cursor: "pointer", fontSize: 12 }}>Fechar</button>
+          <button onClick={() => setShowAlertas(false)} style={{ width: "100%", marginTop: 12, padding: "9px", borderRadius: 8, border: "1px solid #1e2d40", background: "var(--bg-top, #0b1120)", color: "var(--text-muted, #64748b)", cursor: "pointer", fontSize: 12 }}>Fechar</button>
         </Modal>
       )}
 
@@ -664,8 +664,8 @@ function FaseModal({ fase, fases, onSave, onDelete, onClose }) {
         <button onClick={submit} style={{ flex: 1, padding: "9px", borderRadius: 8, border: "none", background: "#1d4ed8", color: "#fff", fontWeight: 700, cursor: "pointer", fontSize: 12 }}>
           {fase ? "Salvar" : "Criar Fase"}
         </button>
-        {fase && <button onClick={() => onDelete(fase.id)} style={{ padding: "9px 14px", borderRadius: 8, border: "1px solid #ef444455", background: "#2d0a0a", color: "#ef4444", fontWeight: 700, cursor: "pointer", fontSize: 12 }}>Excluir</button>}
-        <button onClick={onClose} style={{ padding: "9px 14px", borderRadius: 8, border: "1px solid #1e2d40", background: "transparent", color: "#64748b", cursor: "pointer", fontSize: 12 }}>Cancelar</button>
+        {fase && <button onClick={() => onDelete(fase.id)} style={{ padding: "9px 14px", borderRadius: 8, border: "1px solid #ef444455", background: "var(--bg-alert, #2d0a0a)", color: "#ef4444", fontWeight: 700, cursor: "pointer", fontSize: 12 }}>Excluir</button>}
+        <button onClick={onClose} style={{ padding: "9px 14px", borderRadius: 8, border: "1px solid #1e2d40", background: "transparent", color: "var(--text-muted, #64748b)", cursor: "pointer", fontSize: 12 }}>Cancelar</button>
       </div>
     </Modal>
   );
@@ -697,7 +697,7 @@ function TarefaModal({ faseId, tarefa, onSave, onClose }) {
         <button onClick={submit} style={{ flex: 1, padding: "9px", borderRadius: 8, border: "none", background: "#1d4ed8", color: "#fff", fontWeight: 700, cursor: "pointer", fontSize: 12 }}>
           {tarefa ? "Salvar" : "Criar Tarefa"}
         </button>
-        <button onClick={onClose} style={{ padding: "9px 14px", borderRadius: 8, border: "1px solid #1e2d40", background: "transparent", color: "#64748b", cursor: "pointer", fontSize: 12 }}>Cancelar</button>
+        <button onClick={onClose} style={{ padding: "9px 14px", borderRadius: 8, border: "1px solid #1e2d40", background: "transparent", color: "var(--text-muted, #64748b)", cursor: "pointer", fontSize: 12 }}>Cancelar</button>
       </div>
     </Modal>
   );
