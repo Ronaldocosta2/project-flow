@@ -2,13 +2,14 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, CheckCircle2, Zap, Shield, BarChart3, Rocket } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import SignupPopup from '@/components/SignupPopup';
 
 const Landing = () => {
   const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col font-sans">
-      {/* Header */}
+      <SignupPopup />
       <header className="container mx-auto px-4 py-6 flex justify-between items-center z-10 relative">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground font-bold">
@@ -53,7 +54,7 @@ const Landing = () => {
             </div>
             <h3 className="text-2xl font-bold mb-2">Plano de Inauguração</h3>
             <div className="flex items-baseline justify-center gap-1 mb-6">
-              <span className="text-4xl font-extrabold text-primary">R$ 5,00</span>
+              <span className="text-4xl font-extrabold text-primary">R$ 29,90</span>
               <span className="text-sm font-medium text-muted-foreground">/mês</span>
             </div>
             <ul className="text-left space-y-3 mb-8">
@@ -70,7 +71,7 @@ const Landing = () => {
                 </li>
               ))}
             </ul>
-            <Button size="lg" className="w-full text-lg h-14" onClick={() => window.open('https://invoice.infinitepay.io/plans/romcosta/IMULWZ2o3', '_blank')}>
+            <Button size="lg" className="w-full text-lg h-14" onClick={() => window.open('https://buy.stripe.com/8x25kw1Zt7mq8xX4b5gjC01', '_blank')}>
               Garantir Minha Vaga <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
             <p className="text-xs text-muted-foreground mt-4 text-center">
@@ -130,8 +131,8 @@ const Landing = () => {
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-10">
             Aproveite a oferta de inauguração e junte-se aos primeiros usuários do sistema.
           </p>
-          <Button size="lg" className="h-14 px-8 text-lg" onClick={() => window.open('https://invoice.infinitepay.io/plans/romcosta/IMULWZ2o3', '_blank')}>
-            Criar Conta Agora - R$ 5,00/mês
+          <Button size="lg" className="h-14 px-8 text-lg" onClick={() => window.open('https://buy.stripe.com/8x25kw1Zt7mq8xX4b5gjC01', '_blank')}>
+            Criar Conta Agora - R$ 29,90/mês
           </Button>
         </div>
       </section>
