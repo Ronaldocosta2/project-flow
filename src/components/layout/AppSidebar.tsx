@@ -1,6 +1,7 @@
 import { NavLink, useLocation } from 'react-router-dom';
-import { LayoutDashboard, FolderKanban, GanttChart, Users, Settings, Zap } from 'lucide-react';
+import { LayoutDashboard, FolderKanban, GanttChart, Users, Settings, Zap, Moon, Sun } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useTheme } from '@/components/theme-provider';
 
 const navItems = [
   { to: '/', icon: LayoutDashboard, label: 'Dashboard' },
@@ -12,6 +13,7 @@ const navItems = [
 
 const AppSidebar = () => {
   const location = useLocation();
+  const { theme, setTheme } = useTheme();
 
   return (
     <aside className="fixed left-0 top-0 z-40 flex h-screen w-16 flex-col items-center border-r border-border bg-sidebar py-6 lg:w-56">
@@ -50,7 +52,15 @@ const AppSidebar = () => {
       </nav>
 
       {/* Bottom */}
-      <div className="px-3">
+      <div className="mt-auto px-3 w-full flex flex-col gap-3">
+        <button
+          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          className="flex items-center justify-center lg:justify-start gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-sidebar-foreground transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+        >
+          {theme === "dark" ? <Sun className="h-4 w-4 shrink-0" /> : <Moon className="h-4 w-4 shrink-0" />}
+          <span className="hidden lg:block">Alternar Tema</span>
+        </button>
+
         <div className="hidden rounded-lg border border-border bg-card p-3 lg:block">
           <p className="text-xs font-medium text-foreground">Análise Preditiva</p>
           <p className="mt-1 text-xs text-muted-foreground">2 projetos em risco</p>

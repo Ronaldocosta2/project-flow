@@ -179,6 +179,49 @@ function recalcularCronograma(fases) {
   return currentFases;
 }
 
+const THEMES: any = {
+  dark: {
+    "--bg-app": "#070d1a",
+    "--bg-top": "#0b1120",
+    "--bg-row-alt": "#0d1528",
+    "--bg-row-sel": "#0f1f35",
+    "--bg-row-sel-tr": "#0f1f3533",
+    "--bg-row-alt-tr": "#0d152811",
+    "--bg-task": "#060c18",
+    "--bg-task-tr": "#060c1888",
+    "--bg-modal": "#0f1a2e",
+    "--bg-overlay": "#00000088",
+    "--text-main": "#e2e8f0",
+    "--text-title": "#f1f5f9",
+    "--text-muted": "#64748b",
+    "--text-dark": "#475569",
+    "--border-main": "#1e2d40",
+    "--border-gantt": "#0f172a",
+    "--border-grid": "#ffffff05",
+    "--bg-alert": "#2d0a0a"
+  },
+  light: {
+    "--bg-app": "#f8fafc",
+    "--bg-top": "#ffffff",
+    "--bg-row-alt": "#f1f5f9",
+    "--bg-row-sel": "#e2e8f0",
+    "--bg-row-sel-tr": "#e2e8f088",
+    "--bg-row-alt-tr": "#f8fafc88",
+    "--bg-task": "#ffffff",
+    "--bg-task-tr": "#ffffff88",
+    "--bg-modal": "#ffffff",
+    "--bg-overlay": "#00000044",
+    "--text-main": "#334155",
+    "--text-title": "#0f172a",
+    "--text-muted": "#64748b",
+    "--text-dark": "#94a3b8",
+    "--border-main": "#cbd5e1",
+    "--border-gantt": "#e2e8f0",
+    "--border-grid": "#0000000a",
+    "--bg-alert": "#fee2e2"
+  }
+};
+
 export default function GanttPro() {
   const FASES_INIT_DATES = FASES_INIT.map(f => ({
   ...f,
