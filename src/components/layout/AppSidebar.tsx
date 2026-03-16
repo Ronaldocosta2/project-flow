@@ -1,5 +1,5 @@
 import { NavLink, useLocation } from 'react-router-dom';
-import { LayoutDashboard, FolderKanban, GanttChart, Users, Settings, Zap, Moon, Sun } from 'lucide-react';
+import { LayoutDashboard, FolderKanban, GanttChart, Users, Settings, Zap, Moon, Sun, PieChart } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useTheme } from '@/components/theme-provider';
 
@@ -8,6 +8,7 @@ const navItems = [
   { to: '/projects', icon: FolderKanban, label: 'Projetos' },
   { to: '/timeline', icon: GanttChart, label: 'Cronograma' },
   { to: '/team', icon: Users, label: 'Equipe' },
+  { to: '/financial-report', icon: PieChart, label: 'Relatório Financeiro' },
   { to: '/settings', icon: Settings, label: 'Configurações' },
 ];
 
