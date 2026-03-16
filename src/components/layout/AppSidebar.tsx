@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 import { useTheme } from '@/components/theme-provider';
 
 const navItems = [
-  { to: '/', icon: LayoutDashboard, label: 'Dashboard' },
+  { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
   { to: '/projects', icon: FolderKanban, label: 'Projetos' },
   { to: '/timeline', icon: GanttChart, label: 'Cronograma' },
   { to: '/team', icon: Users, label: 'Equipe' },
