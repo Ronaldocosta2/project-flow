@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { useState, useRef, useCallback, useEffect } from "react";
+import { useTheme } from "@/components/theme-provider";
 
 // ─── Utilitários ───────────────────────────────────────────────────────────────
 function d(y, m, day) { return new Date(y, m, day); }
