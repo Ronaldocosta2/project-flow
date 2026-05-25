@@ -9,6 +9,7 @@ import ProjectDetail from "./pages/ProjectDetail";
 import Timeline from "./pages/Timeline";
 import Team from "./pages/Team";
 import FinancialReport from "./pages/FinancialReport";
+import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 import { ThemeProvider } from "@/components/theme-provider";
 
