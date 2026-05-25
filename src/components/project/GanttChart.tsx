@@ -361,14 +361,21 @@ export default function GanttPro() {
   const todayX = dateToPx(HOJE);
 
   // ── Layout ────────────────────────────────────────────────────────────────
+  const { theme } = useTheme();
+  const resolvedTheme = theme === "system"
+    ? (typeof window !== "undefined" && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+    : theme;
+  const themeVars = THEMES[resolvedTheme] || THEMES.dark;
+
   const wrap = fullscreen
-    ? { position: "fixed", inset: 0, zIndex: 9999, background: "var(--bg-app, #070d1a)", display: "flex", flexDirection: "column", fontFamily: "'DM Mono','Courier New',monospace" }
-    : { background: "var(--bg-app, #070d1a)", minHeight: "100vh", color: "var(--text-main, #e2e8f0)", fontFamily: "'DM Mono','Courier New',monospace" };
+    ? { ...themeVars, position: "fixed", inset: 0, zIndex: 9999, background: "var(--bg-app)", display: "flex", flexDirection: "column", fontFamily: "'DM Mono','Courier New',monospace" }
+    : { ...themeVars, background: "var(--bg-app)", minHeight: "100vh", color: "var(--text-main)", fontFamily: "'DM Mono','Courier New',monospace" };
 
   const LEFT_W = 230;
 
   return (
     <div style={wrap}>
+
 
       {/* ── TOPBAR ── */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 20px", background: "var(--bg-top, #0b1120)", borderBottom: "1px solid #1e2d40", flexShrink: 0, flexWrap: "wrap", gap: 8 }}>
