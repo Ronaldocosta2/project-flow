@@ -9,6 +9,7 @@ import ProjectDetail from "./pages/ProjectDetail";
 import Timeline from "./pages/Timeline";
 import Team from "./pages/Team";
 import FinancialReport from "./pages/FinancialReport";
+import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 import { ThemeProvider } from "@/components/theme-provider";
 
@@ -31,6 +32,7 @@ const App = () => (
             <Route path="/timeline" element={<Timeline />} />
             <Route path="/team" element={<Team />} />
             <Route path="/financial-report" element={<FinancialReport />} />
+            <Route path="/settings" element={<Settings />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
