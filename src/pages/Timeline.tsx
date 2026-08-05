@@ -13,7 +13,7 @@ const Timeline = () => {
     <AppLayout>
       <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-foreground">Cronograma Geral</h1>
+          <h1 className="text-2xl font-bold text-foreground">Timeline Overview</h1>
           <p className="mt-1 text-sm text-muted-foreground">Visão consolidada de todas as tarefas ativas</p>
         </div>
         <div className="w-full sm:w-64">

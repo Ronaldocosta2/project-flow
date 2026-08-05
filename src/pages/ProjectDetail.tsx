@@ -88,7 +88,7 @@ const ProjectDetail = () => {
           onClick={() => setView('gantt')}
           className={cn('rounded-md px-4 py-1.5 text-xs font-medium transition-colors', view === 'gantt' ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground')}
         >
-          Cronograma
+          Timeline
         </button>
       </div>
 

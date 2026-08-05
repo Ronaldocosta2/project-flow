@@ -151,7 +151,7 @@ const inputStyle = {
 };
 
 // ═══════════════════════════════════════════════════════════════════════════════
-function recalcularCronograma(fases) {
+function recalculateTimeline(fases) {
   let changed = true;
   let currentFases = [...fases];
   // Simple iteration to avoid infinite loops, max 100 passes
@@ -380,7 +380,7 @@ export default function GanttPro() {
       {/* ── TOPBAR ── */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 20px", background: "var(--bg-top, #0b1120)", borderBottom: "1px solid #1e2d40", flexShrink: 0, flexWrap: "wrap", gap: 8 }}>
         <div>
-          <div style={{ fontSize: 9, color: "#3b82f6", fontWeight: 700, letterSpacing: "3px", textTransform: "uppercase" }}>CRONOGRAMA · GANTT PRO v2</div>
+          <div style={{ fontSize: 9, color: "#3b82f6", fontWeight: 700, letterSpacing: "3px", textTransform: "uppercase" }}>TIMELINE · GANTT PRO v2</div>
           <div style={{ fontSize: 17, fontWeight: 800, color: "var(--text-title, #f1f5f9)", letterSpacing: "-0.5px" }}>Solar BPM — Implantação v2</div>
         </div>
 
