@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { Line as RechartsLine } from 'recharts';
 import { teamMembers } from '@/data/mockData';
 import type { DeliveryForecast, RiskPoint, WorkloadPoint } from '@/lib/dashboardMetrics';
 import DeliveryForecastChart from './DeliveryForecastChart';
@@ -236,11 +237,18 @@ describe('dashboard charts', () => {
     expect(screen.getByText('0%')).toBeInTheDocument();
   });
 
-  it('consults reduced-motion preference before rendering series', () => {
-    const matchMedia = setReducedMotion(true);
+  it('disables every portfolio line animation when reduced motion is requested', () => {
+    setReducedMotion(true);
+    const lineRender = vi.spyOn(RechartsLine.prototype, 'render');
 
-    render(<PortfolioProgressChart data={[{ date: '2026-03-01', planned: 20, actual: 10 }]} />);
+    try {
+      render(<PortfolioProgressChart data={[{ date: '2026-03-01', planned: 20, actual: 10 }]} />);
 
-    expect(matchMedia).toHaveBeenCalledWith('(prefers-reduced-motion: reduce)');
+      expect(lineRender).toHaveBeenCalled();
+      expect(lineRender.mock.instances.map(line => line.props.isAnimationActive)).toContain(false);
+      expect(lineRender.mock.instances.map(line => line.props.isAnimationActive)).not.toContain(true);
+    } finally {
+      lineRender.mockRestore();
+    }
   });
 });
