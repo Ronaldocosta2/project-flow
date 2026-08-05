@@ -38,6 +38,15 @@ export interface Project {
   members: TeamMember[];
   tasks: Task[];
   riskScore: number;
+  predictedEndDate: string;
+  updatedAt: string;
+}
+
+export interface ProjectHistoryPoint {
+  projectId: string;
+  date: string;
+  planned: number;
+  actual: number;
 }
 
 export const teamMembers: TeamMember[] = [
@@ -87,26 +96,45 @@ export const projects: Project[] = [
     id: '1', name: 'ProjectFlow MVP', description: 'Desenvolvimento da plataforma de gestão de projetos', status: 'at_risk',
     startDate: '2026-02-01', endDate: '2026-03-30', progress: 52,
     owner: teamMembers[0], members: [teamMembers[0], teamMembers[1], teamMembers[2], teamMembers[3], teamMembers[4], teamMembers[5]],
-    tasks: makeTasks('1'), riskScore: 72,
+    tasks: makeTasks('1'), riskScore: 72, predictedEndDate: '2026-04-11', updatedAt: '2026-03-15',
   },
   {
     id: '2', name: 'Redesign Plataforma Web', description: 'Modernização da interface do produto principal', status: 'at_risk',
     startDate: '2026-01-15', endDate: '2026-03-20', progress: 55,
     owner: teamMembers[2], members: [teamMembers[0], teamMembers[2], teamMembers[3], teamMembers[4]],
-    tasks: makeTasks('2'), riskScore: 65,
+    tasks: makeTasks('2'), riskScore: 65, predictedEndDate: '2026-03-27', updatedAt: '2026-03-15',
   },
   {
     id: '3', name: 'Sistema de Relatórios', description: 'Módulo de geração de relatórios automatizados', status: 'completed',
     startDate: '2026-01-10', endDate: '2026-02-15', progress: 100,
     owner: teamMembers[1], members: [teamMembers[1], teamMembers[5]],
-    tasks: makeTasks('3'), riskScore: 0,
+    tasks: makeTasks('3'), riskScore: 0, predictedEndDate: '2026-02-15', updatedAt: '2026-03-15',
   },
   {
     id: '4', name: 'App Mobile v2', description: 'Nova versão do aplicativo mobile com funcionalidades offline', status: 'on_track',
     startDate: '2026-03-01', endDate: '2026-05-30', progress: 15,
     owner: teamMembers[0], members: [teamMembers[0], teamMembers[2]],
-    tasks: makeTasks('4'), riskScore: 20,
+    tasks: makeTasks('4'), riskScore: 20, predictedEndDate: '2026-05-30', updatedAt: '2026-03-15',
   },
+];
+
+export const projectHistory: ProjectHistoryPoint[] = [
+  { projectId: '1', date: '2026-02-01', planned: 0, actual: 0 },
+  { projectId: '1', date: '2026-02-15', planned: 24, actual: 20 },
+  { projectId: '1', date: '2026-03-01', planned: 48, actual: 38 },
+  { projectId: '1', date: '2026-03-15', planned: 72, actual: 52 },
+  { projectId: '2', date: '2026-01-15', planned: 0, actual: 0 },
+  { projectId: '2', date: '2026-02-01', planned: 25, actual: 22 },
+  { projectId: '2', date: '2026-03-01', planned: 70, actual: 50 },
+  { projectId: '2', date: '2026-03-15', planned: 92, actual: 55 },
+  { projectId: '3', date: '2026-01-10', planned: 0, actual: 0 },
+  { projectId: '3', date: '2026-01-25', planned: 35, actual: 40 },
+  { projectId: '3', date: '2026-02-05', planned: 70, actual: 75 },
+  { projectId: '3', date: '2026-02-15', planned: 100, actual: 100 },
+  { projectId: '4', date: '2026-03-01', planned: 0, actual: 0 },
+  { projectId: '4', date: '2026-03-06', planned: 5, actual: 4 },
+  { projectId: '4', date: '2026-03-10', planned: 10, actual: 9 },
+  { projectId: '4', date: '2026-03-15', planned: 15, actual: 15 },
 ];
 
 export const getStatusColor = (status: ProjectStatus) => {
