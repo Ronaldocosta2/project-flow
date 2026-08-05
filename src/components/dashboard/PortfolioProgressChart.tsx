@@ -23,6 +23,27 @@ const formatDate = (date: string) => new Date(`${date}T00:00:00`).toLocaleDateSt
   month: 'short',
 });
 
+interface ProgressTooltipValueProps {
+  value: string | number | (string | number)[];
+  name: string | number;
+}
+
+export function ProgressTooltipValue({ value, name }: ProgressTooltipValueProps) {
+  const label = chartConfig[name as keyof typeof chartConfig]?.label ?? name;
+
+  return (
+    <>
+      <span className="text-muted-foreground">{label}</span>
+      <span className="font-mono font-medium tabular-nums text-foreground">{Number(value).toLocaleString('pt-BR')}%</span>
+    </>
+  );
+}
+
+const progressTooltipFormatter = (
+  value: string | number | (string | number)[],
+  name: string | number,
+) => <ProgressTooltipValue value={value} name={name} />;
+
 interface PortfolioProgressChartProps {
   data: PortfolioProgressPoint[];
 }
@@ -47,7 +68,12 @@ export default function PortfolioProgressChart({ data }: PortfolioProgressChartP
         <XAxis dataKey="date" tickFormatter={formatDate} tickLine={false} axisLine={false} />
         <YAxis domain={[0, 100]} tickFormatter={value => `${value}%`} tickLine={false} axisLine={false} />
         <ChartTooltip
-          content={<ChartTooltipContent labelFormatter={value => formatDate(String(value))} />}
+          content={(
+            <ChartTooltipContent
+              labelFormatter={value => formatDate(String(value))}
+              formatter={progressTooltipFormatter}
+            />
+          )}
         />
         <Line
           dataKey="planned"

@@ -30,6 +30,7 @@ export interface DeliveryForecast {
   endDate: string;
   predictedEndDate: string;
   delayDays: number;
+  riskScore: number;
   status: Project['status'];
   owner: Project['owner'];
 }
@@ -40,6 +41,7 @@ export interface RiskPoint {
   openTasks: number;
   progress: number;
   riskScore: number;
+  predictedEndDate: string;
   status: Project['status'];
   owner: Project['owner'];
 }
@@ -48,6 +50,10 @@ export interface WorkloadPoint {
   memberId: string;
   memberName: string;
   score: number;
+  lowTasks: number;
+  mediumTasks: number;
+  highTasks: number;
+  criticalTasks: number;
 }
 
 const priorityWeight: Record<TaskPriority, number> = {
@@ -56,6 +62,13 @@ const priorityWeight: Record<TaskPriority, number> = {
   high: 3,
   critical: 4,
 };
+
+const priorityCountKey = {
+  low: 'lowTasks',
+  medium: 'mediumTasks',
+  high: 'highTasks',
+  critical: 'criticalTasks',
+} as const satisfies Record<TaskPriority, keyof WorkloadPoint>;
 
 export const differenceInCalendarDays = (end: string, start: string) =>
   Math.round((Date.parse(`${end}T00:00:00Z`) - Date.parse(`${start}T00:00:00Z`)) / 86_400_000);
@@ -122,6 +135,7 @@ export function buildDeliveryForecast(projects: Project[]): DeliveryForecast[] {
       endDate: project.endDate,
       predictedEndDate: project.predictedEndDate,
       delayDays: differenceInCalendarDays(project.predictedEndDate, project.endDate),
+      riskScore: project.riskScore,
       status: project.status,
       owner: project.owner,
     }))
@@ -135,6 +149,7 @@ export function buildRiskMap(projects: Project[]): RiskPoint[] {
     openTasks: project.tasks.filter(task => task.status !== 'done').length,
     progress: project.progress,
     riskScore: project.riskScore,
+    predictedEndDate: project.predictedEndDate,
     status: project.status,
     owner: project.owner,
   }));
@@ -150,8 +165,17 @@ export function buildWorkload(projects: Project[]): WorkloadPoint[] {
         memberId: task.assignee.id,
         memberName: task.assignee.name,
         score: 0,
+        lowTasks: 0,
+        mediumTasks: 0,
+        highTasks: 0,
+        criticalTasks: 0,
       };
-      workloadByMember.set(task.assignee.id, { ...current, score: current.score + priorityWeight[task.priority] });
+      const countKey = priorityCountKey[task.priority];
+      workloadByMember.set(task.assignee.id, {
+        ...current,
+        score: current.score + priorityWeight[task.priority],
+        [countKey]: current[countKey] + 1,
+      });
     });
 
   return [...workloadByMember.values()].sort((first, second) => second.score - first.score);

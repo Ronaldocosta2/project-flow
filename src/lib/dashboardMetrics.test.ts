@@ -31,7 +31,7 @@ describe('dashboard metrics', () => {
   it('sorts forecasts by delay descending', () => {
     const forecast = buildDeliveryForecast(projects);
 
-    expect(forecast[0]).toMatchObject({ projectId: '1', delayDays: 12 });
+    expect(forecast[0]).toMatchObject({ projectId: '1', delayDays: 12, riskScore: 72 });
     expect(forecast[1]).toMatchObject({ projectId: '2', delayDays: 7 });
   });
 
@@ -46,14 +46,26 @@ describe('dashboard metrics', () => {
     const workload = buildWorkload(projects);
 
     expect(workload.find(item => item.memberId === '4')).toEqual(
-      expect.objectContaining({ memberName: 'Pedro Oliveira', score: 7 }),
+      expect.objectContaining({
+        memberName: 'Pedro Oliveira',
+        score: 7,
+        lowTasks: 0,
+        mediumTasks: 0,
+        highTasks: 1,
+        criticalTasks: 1,
+      }),
     );
     expect(workload).toEqual([...workload].sort((a, b) => b.score - a.score));
   });
 
   it('maps project risk with open task volume', () => {
     expect(buildRiskMap(projects).find(item => item.projectId === '1')).toEqual(
-      expect.objectContaining({ progress: 52, riskScore: 72, openTasks: 4 }),
+      expect.objectContaining({
+        progress: 52,
+        riskScore: 72,
+        openTasks: 4,
+        predictedEndDate: '2026-04-11',
+      }),
     );
   });
 });
