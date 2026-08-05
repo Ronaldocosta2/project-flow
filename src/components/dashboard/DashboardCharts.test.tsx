@@ -245,8 +245,9 @@ describe('dashboard charts', () => {
       render(<PortfolioProgressChart data={[{ date: '2026-03-01', planned: 20, actual: 10 }]} />);
 
       expect(lineRender).toHaveBeenCalled();
-      expect(lineRender.mock.instances.map(line => line.props.isAnimationActive)).toContain(false);
-      expect(lineRender.mock.instances.map(line => line.props.isAnimationActive)).not.toContain(true);
+      const animationValues = lineRender.mock.instances.map(line => line.props.isAnimationActive);
+      expect(animationValues).toHaveLength(2);
+      expect(animationValues).toEqual([false, false]);
     } finally {
       lineRender.mockRestore();
     }
