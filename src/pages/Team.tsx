@@ -217,7 +217,7 @@ const Team = () => {
               </div>
 
               {hasFilters && allocations.length > 0 && (
-                <Button type="button" variant="outline" onClick={clearFilters}>Limpar filtros</Button>
+                <Button type="button" variant="outline" onClick={clearFilters} className="self-end">Limpar filtros</Button>
               )}
             </div>
           </CardContent>

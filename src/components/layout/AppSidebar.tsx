@@ -8,7 +8,7 @@ const navItems = [
   { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
   { to: '/projects', icon: FolderKanban, label: 'Projetos' },
   { to: '/timeline', icon: TimelineIcon, label: 'Timeline' },
-  { to: '/team', icon: Users, label: 'Equipe' },
+  { to: '/team', icon: Users, label: 'Alocações' },
   { to: '/financial-report', icon: PieChart, label: 'Relatório Financeiro' },
   { to: '/settings', icon: Settings, label: 'Configurações' },
 ];

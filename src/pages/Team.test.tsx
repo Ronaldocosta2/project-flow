@@ -71,6 +71,7 @@ describe('Team allocation page', () => {
     const clearButton = screen.getByRole('button', { name: 'Limpar filtros' });
     const filterGrid = search.closest('.grid');
     expect(clearButton).toBeInTheDocument();
+    expect(clearButton).toHaveClass('self-end');
     expect(filterGrid).toHaveClass('sm:grid-cols-2', 'xl:grid-cols-4', 'xl:items-end');
     expect(filterGrid).not.toHaveClass('lg:grid-cols-[minmax(16rem,1fr)_minmax(12rem,0.7fr)_minmax(12rem,0.7fr)_auto]');
     for (const field of Array.from(filterGrid!.children).slice(0, 3)) {
