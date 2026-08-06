@@ -15,6 +15,7 @@ describe('AppSidebar', () => {
     );
 
     expect(screen.getByRole('link', { name: 'Alocações' })).toHaveAttribute('href', '/team');
+    expect(screen.getByRole('link', { name: 'Alocações' })).toHaveAttribute('aria-label', 'Alocações');
     expect(screen.queryByRole('link', { name: 'Equipe' })).not.toBeInTheDocument();
   });
 });
