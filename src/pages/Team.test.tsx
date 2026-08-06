@@ -62,6 +62,22 @@ describe('Team allocation page', () => {
     expect(screen.getAllByText('Carlos Souza')).toHaveLength(2);
   });
 
+  it('distribui filtros e botão em um grid fluido sem mínimos fixos', () => {
+    renderPage();
+
+    const search = screen.getByLabelText('Buscar profissional');
+    fireEvent.change(search, { target: { value: 'Julia' } });
+
+    const clearButton = screen.getByRole('button', { name: 'Limpar filtros' });
+    const filterGrid = search.closest('.grid');
+    expect(clearButton).toBeInTheDocument();
+    expect(filterGrid).toHaveClass('sm:grid-cols-2', 'xl:grid-cols-4', 'xl:items-end');
+    expect(filterGrid).not.toHaveClass('lg:grid-cols-[minmax(16rem,1fr)_minmax(12rem,0.7fr)_minmax(12rem,0.7fr)_auto]');
+    for (const field of Array.from(filterGrid!.children).slice(0, 3)) {
+      expect(field).toHaveClass('min-w-0');
+    }
+  });
+
   it('expande e recolhe atividades agrupadas com link para o projeto', () => {
     renderPage();
 

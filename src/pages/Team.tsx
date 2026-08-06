@@ -169,8 +169,8 @@ const Team = () => {
 
         <Card>
           <CardContent className="p-5">
-            <div className="grid gap-4 lg:grid-cols-[minmax(16rem,1fr)_minmax(12rem,0.7fr)_minmax(12rem,0.7fr)_auto] lg:items-end">
-              <div>
+            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4 xl:items-end">
+              <div className="min-w-0">
                 <label htmlFor="allocation-search" className="mb-2 block text-sm font-medium text-foreground">
                   Buscar profissional
                 </label>
@@ -187,7 +187,7 @@ const Team = () => {
                 </div>
               </div>
 
-              <div>
+              <div className="min-w-0">
                 <label htmlFor="allocation-project" className="mb-2 block text-sm font-medium text-foreground">Projeto</label>
                 <select
                   id="allocation-project"
@@ -200,7 +200,7 @@ const Team = () => {
                 </select>
               </div>
 
-              <div>
+              <div className="min-w-0">
                 <label htmlFor="allocation-status" className="mb-2 block text-sm font-medium text-foreground">Status da atividade</label>
                 <select
                   id="allocation-status"
