@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, it } from 'vitest';
 import Team from './Team';
@@ -18,8 +18,37 @@ describe('Team allocation page', () => {
     expect(screen.getAllByText('Projetos ativos')).toHaveLength(2);
     expect(screen.getAllByText('Atividades abertas')).toHaveLength(2);
     expect(screen.getByText('Atividades críticas')).toBeInTheDocument();
+
+    const indicators = screen.getByRole('region', { name: 'Indicadores da equipe' });
+    for (const [label, value] of [
+      ['Profissionais', '6'],
+      ['Projetos ativos', '3'],
+      ['Atividades abertas', '9'],
+      ['Atividades críticas', '2'],
+    ]) {
+      const metric = within(indicators).getByText(label).parentElement;
+      expect(within(metric!).getByText(value)).toBeInTheDocument();
+    }
+    expect(within(indicators).getByText('a fazer, em andamento ou em revisão')).toBeInTheDocument();
     expect(screen.getAllByText('Ana Silva')).toHaveLength(2);
     expect(screen.getAllByText('Rafael Lima')).toHaveLength(2);
+  });
+
+  it('mantém cards até lg e libera a tabela completa em telas maiores', () => {
+    renderPage();
+
+    const table = screen.getByRole('table');
+    expect(table).toHaveClass('hidden', 'lg:table');
+    expect(table.parentElement).toHaveClass('hidden', 'overflow-x-auto', 'lg:block');
+    expect(screen.getByRole('region', { name: 'Alocações em cards' })).toHaveClass('lg:hidden');
+  });
+
+  it('oculta as iniciais decorativas dos avatares da leitura assistiva', () => {
+    renderPage();
+
+    for (const initials of screen.getAllByText('CS')) {
+      expect(initials).toHaveAttribute('aria-hidden', 'true');
+    }
   });
 
   it('filtra por busca e permite limpar os filtros', () => {

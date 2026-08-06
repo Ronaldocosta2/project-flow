@@ -133,7 +133,7 @@ const Team = () => {
   const metrics = [
     { label: 'Profissionais', value: teamMembers.length, detail: 'cadastrados na equipe', icon: Users },
     { label: 'Projetos ativos', value: activeProjects.length, detail: 'em acompanhamento', icon: FolderKanban },
-    { label: 'Atividades abertas', value: openTasks.length, detail: 'a fazer ou em andamento', icon: ListTodo },
+    { label: 'Atividades abertas', value: openTasks.length, detail: 'a fazer, em andamento ou em revisão', icon: ListTodo },
     { label: 'Atividades críticas', value: criticalTasks.length, detail: 'exigem atenção', icon: AlertTriangle },
   ];
 
@@ -239,8 +239,8 @@ const Team = () => {
           </Card>
         ) : (
           <>
-            <div className="hidden overflow-hidden rounded-xl border border-border bg-card md:block">
-              <table className="hidden w-full text-sm md:table">
+            <div className="hidden overflow-x-auto rounded-xl border border-border bg-card lg:block">
+              <table className="hidden w-full text-sm lg:table">
                 <thead className="bg-muted/50 text-left text-xs uppercase tracking-wide text-muted-foreground">
                   <tr>
                     <th className="px-5 py-3 font-medium">Profissional</th>
@@ -258,7 +258,7 @@ const Team = () => {
                         <tr className="border-t border-border first:border-t-0">
                           <td className="px-5 py-4">
                             <div className="flex items-center gap-3">
-                              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-bold text-primary">
+                              <div aria-hidden="true" className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-bold text-primary">
                                 {allocation.member.avatar}
                               </div>
                               <div>
@@ -284,14 +284,14 @@ const Team = () => {
               </table>
             </div>
 
-            <div className="space-y-4 md:hidden">
+            <section aria-label="Alocações em cards" className="space-y-4 lg:hidden">
               {allocations.map(allocation => {
                 const expanded = expandedIds.has(allocation.member.id);
                 return (
                   <Card key={allocation.member.id}>
                     <CardContent className="p-5">
                       <div className="flex items-start gap-3">
-                        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-bold text-primary">
+                        <div aria-hidden="true" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-bold text-primary">
                           {allocation.member.avatar}
                         </div>
                         <div className="min-w-0">
@@ -321,7 +321,7 @@ const Team = () => {
                   </Card>
                 );
               })}
-            </div>
+            </section>
           </>
         )}
       </div>
