@@ -40,6 +40,7 @@ describe('buildTeamAllocations', () => {
     expect(formatAllocationDate('2026-03-10')).toBe('10/03/2026');
     expect(formatAllocationDate()).toBe('Data não informada');
     expect(formatAllocationDate('invalid')).toBe('Data não informada');
+    expect(formatAllocationDate('2026-02-29')).toBe('Data não informada');
   });
 
   it('aplica busca, projeto e status', () => {

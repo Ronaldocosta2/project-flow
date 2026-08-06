@@ -23,8 +23,12 @@ export interface TeamAllocation {
 export function formatAllocationDate(value?: string): string {
   if (!value) return 'Data não informada';
 
-  const date = new Date(`${value}T00:00:00`);
-  return Number.isNaN(date.getTime())
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  if (!match) return 'Data não informada';
+
+  const [year, month, day] = match.slice(1).map(Number);
+  const date = new Date(year, month - 1, day);
+  return date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day
     ? 'Data não informada'
     : new Intl.DateTimeFormat('pt-BR').format(date);
 }
