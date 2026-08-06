@@ -14,6 +14,7 @@ describe('Team allocation page', () => {
     renderPage();
 
     expect(screen.getByRole('heading', { name: 'Alocação da Equipe' })).toBeInTheDocument();
+    expect(screen.getByText('Acompanhe profissionais, projetos e atividades em andamento')).toBeInTheDocument();
     expect(screen.getByText('Profissionais')).toBeInTheDocument();
     expect(screen.getAllByText('Projetos ativos')).toHaveLength(2);
     expect(screen.getAllByText('Atividades abertas')).toHaveLength(2);
@@ -41,6 +42,41 @@ describe('Team allocation page', () => {
     expect(table).toHaveClass('hidden', 'lg:table');
     expect(table.parentElement).toHaveClass('hidden', 'overflow-x-auto', 'lg:block');
     expect(screen.getByRole('region', { name: 'Alocações em cards' })).toHaveClass('lg:hidden');
+  });
+
+  it('separa função de profissional na tabela e expande por todas as colunas', () => {
+    renderPage();
+
+    const table = screen.getByRole('table');
+    expect(within(table).getAllByRole('columnheader').map(header => header.textContent)).toEqual([
+      'Profissional',
+      'Função',
+      'Projetos ativos',
+      'Atividades abertas',
+      'Próxima entrega',
+      'Detalhes',
+    ]);
+
+    fireEvent.click(within(table).getByRole('button', { name: 'Ver atividades de Carlos Souza' }));
+    expect(within(table).getByText('Implementar dashboard').closest('td')).toHaveAttribute('colspan', '6');
+  });
+
+  it('mostra ausência de entrega pendente sem alterar o fallback de data inválida', () => {
+    renderPage();
+
+    fireEvent.change(screen.getByLabelText('Status da atividade'), { target: { value: 'done' } });
+
+    expect(screen.getAllByText('Sem entrega pendente').length).toBeGreaterThan(0);
+    expect(screen.queryByText('Data não informada')).not.toBeInTheDocument();
+  });
+
+  it('mantém nome acessível completo e texto visual curto no botão dos cards', () => {
+    renderPage();
+
+    const cards = screen.getByRole('region', { name: 'Alocações em cards' });
+    const button = within(cards).getByRole('button', { name: 'Ver atividades de Carlos Souza' });
+    expect(button).toHaveAttribute('aria-label', 'Ver atividades de Carlos Souza');
+    expect(button).toHaveTextContent(/^Ver atividades$/);
   });
 
   it('oculta as iniciais decorativas dos avatares da leitura assistiva', () => {

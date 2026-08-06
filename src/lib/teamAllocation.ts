@@ -44,7 +44,9 @@ export function buildTeamAllocations(
   const requiresTaskMatch = filters.projectId !== 'all' || filters.taskStatus !== 'all';
 
   return members.map(member => {
-    const assignedTasks = tasks.filter(task => task.assignee.id === member.id);
+    const assignedTasks = tasks.filter(task =>
+      task.assignee.id === member.id && projectById.has(task.projectId),
+    );
     const visibleTasks = assignedTasks.filter(task =>
       (filters.projectId === 'all' || task.projectId === filters.projectId) &&
       (filters.taskStatus === 'all' || task.status === filters.taskStatus),

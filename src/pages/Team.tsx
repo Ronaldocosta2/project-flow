@@ -81,6 +81,9 @@ const ActivityDetails = ({ allocation }: { allocation: TeamAllocation }) => (
   </div>
 );
 
+const formatNextDelivery = (value?: string) =>
+  value ? formatAllocationDate(value) : 'Sem entrega pendente';
+
 const Team = () => {
   const [search, setSearch] = useState('');
   const [projectId, setProjectId] = useState('all');
@@ -122,10 +125,11 @@ const Team = () => {
         variant="ghost"
         size="sm"
         aria-expanded={expanded}
+        aria-label={`${expanded ? 'Ocultar' : 'Ver'} atividades de ${allocation.member.name}`}
         onClick={() => toggleMember(allocation.member.id)}
       >
         {expanded ? <ChevronUp /> : <ChevronDown />}
-        {expanded ? `Ocultar atividades de ${allocation.member.name}` : `Ver atividades de ${allocation.member.name}`}
+        {expanded ? 'Ocultar atividades' : 'Ver atividades'}
       </Button>
     );
   };
@@ -143,7 +147,7 @@ const Team = () => {
         <header>
           <h1 className="text-2xl font-bold text-foreground">Alocação da Equipe</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Acompanhe profissionais, projetos e o andamento das atividades atribuídas.
+            Acompanhe profissionais, projetos e atividades em andamento
           </p>
         </header>
 
@@ -244,6 +248,7 @@ const Team = () => {
                 <thead className="bg-muted/50 text-left text-xs uppercase tracking-wide text-muted-foreground">
                   <tr>
                     <th className="px-5 py-3 font-medium">Profissional</th>
+                    <th className="px-5 py-3 font-medium">Função</th>
                     <th className="px-5 py-3 font-medium">Projetos ativos</th>
                     <th className="px-5 py-3 font-medium">Atividades abertas</th>
                     <th className="px-5 py-3 font-medium">Próxima entrega</th>
@@ -263,18 +268,18 @@ const Team = () => {
                               </div>
                               <div>
                                 <p className="font-semibold text-foreground">{allocation.member.name}</p>
-                                <p className="text-xs text-muted-foreground">{allocation.member.role}</p>
                               </div>
                             </div>
                           </td>
+                          <td className="px-5 py-4 text-muted-foreground">{allocation.member.role}</td>
                           <td className="px-5 py-4 text-foreground">{allocation.activeProjects.length}</td>
                           <td className="px-5 py-4 text-foreground">{allocation.openTasks.length}</td>
-                          <td className="px-5 py-4 text-muted-foreground">{formatAllocationDate(allocation.nextDelivery)}</td>
+                          <td className="px-5 py-4 text-muted-foreground">{formatNextDelivery(allocation.nextDelivery)}</td>
                           <td className="px-5 py-4 text-right">{expansionButton(allocation)}</td>
                         </tr>
                         {expanded && (
                           <tr className="border-t border-border bg-muted/20">
-                            <td colSpan={5} className="px-5 py-4"><ActivityDetails allocation={allocation} /></td>
+                            <td colSpan={6} className="px-5 py-4"><ActivityDetails allocation={allocation} /></td>
                           </tr>
                         )}
                       </Fragment>
@@ -311,7 +316,7 @@ const Team = () => {
                         </div>
                         <div>
                           <dt className="text-[11px] text-muted-foreground">Entrega</dt>
-                          <dd className="mt-1 text-xs font-semibold text-foreground">{formatAllocationDate(allocation.nextDelivery)}</dd>
+                          <dd className="mt-1 text-xs font-semibold text-foreground">{formatNextDelivery(allocation.nextDelivery)}</dd>
                         </div>
                       </dl>
 

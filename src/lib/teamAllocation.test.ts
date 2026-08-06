@@ -26,14 +26,29 @@ describe('buildTeamAllocations', () => {
     expect(result[0].visibleTasks).toEqual([]);
   });
 
-  it('ignora no agrupamento uma tarefa cujo projeto não existe', () => {
-    const orphan = { ...projects[0].tasks[0], projectId: 'missing' };
+  it('exclui uma tarefa cujo projeto não existe de toda a alocação', () => {
+    const orphan = { ...projects[0].tasks[3], projectId: 'missing' };
     const source = [{ ...projects[0], tasks: [orphan] }];
     const result = buildTeamAllocations(teamMembers, source, {
       search: '', projectId: 'all', taskStatus: 'all',
     });
+    const allocation = result.find(item => item.member.id === orphan.assignee.id);
 
-    expect(result.find(item => item.member.id === orphan.assignee.id)?.groups).toEqual([]);
+    expect(allocation?.visibleTasks).toEqual([]);
+    expect(allocation?.openTasks).toEqual([]);
+    expect(allocation?.nextDelivery).toBeUndefined();
+    expect(allocation?.groups).toEqual([]);
+  });
+
+  it('usa a menor data entre várias atividades abertas como próxima entrega', () => {
+    const later = projects[0].tasks[3];
+    const earlier = { ...later, id: 'earlier', endDate: '2026-02-25' };
+    const source = [{ ...projects[0], tasks: [later, earlier] }];
+    const result = buildTeamAllocations([later.assignee], source, {
+      search: '', projectId: 'all', taskStatus: 'all',
+    });
+
+    expect(result[0].nextDelivery).toBe('2026-02-25');
   });
 
   it('formata datas válidas e protege datas ausentes ou inválidas', () => {
