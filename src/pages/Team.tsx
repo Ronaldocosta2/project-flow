@@ -26,6 +26,7 @@ import {
 import {
   buildTeamAllocations,
   formatAllocationDate,
+  formatNextDelivery,
   type TeamAllocation,
 } from '@/lib/teamAllocation';
 
@@ -80,9 +81,6 @@ const ActivityDetails = ({ allocation }: { allocation: TeamAllocation }) => (
     ))}
   </div>
 );
-
-const formatNextDelivery = (value?: string) =>
-  value ? formatAllocationDate(value) : 'Sem entrega pendente';
 
 const Team = () => {
   const [search, setSearch] = useState('');
@@ -274,7 +272,7 @@ const Team = () => {
                           <td className="px-5 py-4 text-muted-foreground">{allocation.member.role}</td>
                           <td className="px-5 py-4 text-foreground">{allocation.activeProjects.length}</td>
                           <td className="px-5 py-4 text-foreground">{allocation.openTasks.length}</td>
-                          <td className="px-5 py-4 text-muted-foreground">{formatNextDelivery(allocation.nextDelivery)}</td>
+                          <td className="px-5 py-4 text-muted-foreground">{formatNextDelivery(allocation.openTasks.length, allocation.nextDelivery)}</td>
                           <td className="px-5 py-4 text-right">{expansionButton(allocation)}</td>
                         </tr>
                         {expanded && (
@@ -316,7 +314,7 @@ const Team = () => {
                         </div>
                         <div>
                           <dt className="text-[11px] text-muted-foreground">Entrega</dt>
-                          <dd className="mt-1 text-xs font-semibold text-foreground">{formatNextDelivery(allocation.nextDelivery)}</dd>
+                          <dd className="mt-1 text-xs font-semibold text-foreground">{formatNextDelivery(allocation.openTasks.length, allocation.nextDelivery)}</dd>
                         </div>
                       </dl>
 

@@ -1,8 +1,14 @@
 import { describe, expect, it } from 'vitest';
 import { projects, teamMembers } from '@/data/mockData';
-import { buildTeamAllocations, formatAllocationDate } from './teamAllocation';
+import { buildTeamAllocations, formatAllocationDate, formatNextDelivery } from './teamAllocation';
 
 describe('buildTeamAllocations', () => {
+  it('distingue ausência de atividade aberta de data de entrega não informada', () => {
+    expect(formatNextDelivery(0)).toBe('Sem entrega pendente');
+    expect(formatNextDelivery(1)).toBe('Data não informada');
+    expect(formatNextDelivery(1, 'invalid')).toBe('Data não informada');
+  });
+
   it('agrega projetos, atividades abertas e próxima entrega por profissional', () => {
     const allocations = buildTeamAllocations(teamMembers, projects, {
       search: '',

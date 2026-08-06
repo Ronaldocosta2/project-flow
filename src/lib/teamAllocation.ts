@@ -33,6 +33,10 @@ export function formatAllocationDate(value?: string): string {
     : new Intl.DateTimeFormat('pt-BR').format(date);
 }
 
+export function formatNextDelivery(openTaskCount: number, value?: string): string {
+  return openTaskCount === 0 ? 'Sem entrega pendente' : formatAllocationDate(value);
+}
+
 export function buildTeamAllocations(
   members: TeamMember[],
   projects: Project[],
