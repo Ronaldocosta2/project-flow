@@ -1,0 +1,9 @@
+Fontes locais usadas na versão ampliada:
+- docs/superpowers/specs/2026-08-06-landing-experimentacao-design.md
+- docs/superpowers/plans/2026-08-06-landing-experimentacao.md
+- src/pages/Landing.tsx
+- src/pages/Landing.test.tsx
+- src/App.tsx
+- commit aaf67f9 e evidências de teste/build registradas na sessão
+
+Não foram usadas afirmações ou imagens externas. A captura local do produto não pôde ser executada por limite operacional do ambiente; nenhum screenshot artificial foi inserido.

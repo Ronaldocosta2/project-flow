@@ -29,6 +29,8 @@ import {
   formatNextDelivery,
   type TeamAllocation,
 } from '@/lib/teamAllocation';
+import HeatMap from '@/components/team/HeatMap';
+import RiskMap from '@/components/team/RiskMap';
 
 const ActivityDetails = ({ allocation }: { allocation: TeamAllocation }) => (
   <div className="space-y-4">
@@ -224,6 +226,10 @@ const Team = () => {
             </div>
           </CardContent>
         </Card>
+
+{/* Visualizações de alocação */}
+<HeatMap allocations={allocations} />
+<RiskMap allocations={allocations} />
 
         {teamMembers.length === 0 ? (
           <Card>
