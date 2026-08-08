@@ -14,6 +14,7 @@ import NotFound from "./pages/NotFound";
 import { ThemeProvider } from "@/components/theme-provider";
 
 import Landing from "./pages/Landing";
+import { ApiConfigProvider } from "@/contexts/ApiConfigContext";
 
 const queryClient = new QueryClient();
 
