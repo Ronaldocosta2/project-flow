@@ -1,49 +1,59 @@
-import { useMemo, useState } from 'react';
+import React, { Suspense, useMemo } from 'react';
 import DashboardFilters from '@/components/dashboard/DashboardFilters';
-import DeliveryForecastChart from '@/components/dashboard/DeliveryForecastChart';
 import ExecutiveMetricsGrid from '@/components/dashboard/ExecutiveMetrics';
-import PortfolioProgressChart from '@/components/dashboard/PortfolioProgressChart';
-import RiskMapChart from '@/components/dashboard/RiskMapChart';
-import WorkloadChart from '@/components/dashboard/WorkloadChart';
 import AppLayout from '@/components/layout/AppLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { projectHistory, projects, teamMembers } from '@/data/mockData';
-import {
-  buildDeliveryForecast,
-  buildPortfolioProgress,
-  buildRiskMap,
-  buildWorkload,
-  calculateExecutiveMetrics,
-  filterDashboardData,
-  type DashboardPeriod,
-} from '@/lib/dashboardMetrics';
+import { useDashboardStore } from '@/stores/dashboardStore';
+import { useDashboardData } from '@/hooks/useDashboardData';
+import { buildDeliveryForecast, buildPortfolioProgress, buildRiskMap, buildWorkload, calculateExecutiveMetrics, filterDashboardData, type DashboardPeriod } from '@/lib/dashboardMetrics';
+
+// Lazy‑load heavy chart components
+const PortfolioProgressChart = React.lazy(() => import('@/components/dashboard/PortfolioProgressChart'));
+const DeliveryForecastChart = React.lazy(() => import('@/components/dashboard/DeliveryForecastChart'));
+const RiskMapChart = React.lazy(() => import('@/components/dashboard/RiskMapChart'));
+const WorkloadChart = React.lazy(() => import('@/components/dashboard/WorkloadChart'));
 
 const Index = () => {
-  const [projectId, setProjectId] = useState('all');
-  const [period, setPeriod] = useState<DashboardPeriod>(90);
-  const [memberId, setMemberId] = useState<string | null>(null);
+  // Global filter state via Zustand store
+  const { projectId, period, memberId, setProjectId, setPeriod, setMemberId, clearSelection } = useDashboardStore();
 
+  // Fetch raw data from API (projects, history, team members)
+  const { data: apiData, isLoading, isError } = useDashboardData();
+
+  // Compute dashboard metrics once API data is available
   const dashboard = useMemo(() => {
+    if (!apiData) return null;
+    const { projects, projectHistory, teamMembers } = apiData;
     const referenceDate = projects.reduce(
-      (latest, project) => project.updatedAt > latest ? project.updatedAt : latest,
-      projects[0]?.updatedAt ?? '',
+      (latest, project) => (project.updatedAt > latest ? project.updatedAt : latest),
+      projects[0]?.updatedAt ?? ''
     );
     const filtered = filterDashboardData(projects, projectHistory, { projectId, period, referenceDate });
-
     return {
       metrics: calculateExecutiveMetrics(filtered.projects),
       progress: buildPortfolioProgress(filtered.projects, filtered.history),
       forecast: buildDeliveryForecast(filtered.projects),
       risk: buildRiskMap(filtered.projects),
       workload: buildWorkload(filtered.projects),
-      memberName: teamMembers.find(member => member.id === memberId)?.name ?? null,
+      memberName: teamMembers.find((m) => m.id === memberId)?.name ?? null,
     };
-  }, [memberId, period, projectId]);
+  }, [apiData, memberId, period, projectId]);
 
-  const clearSelection = () => {
-    setProjectId('all');
-    setMemberId(null);
-  };
+  if (isLoading) {
+    return (
+      <AppLayout>
+        <div className="flex h-64 items-center justify-center text-muted-foreground">Carregando dados do dashboard…</div>
+      </AppLayout>
+    );
+  }
+
+  if (isError || !dashboard) {
+    return (
+      <AppLayout>
+        <div className="flex h-64 items-center justify-center text-destructive">Erro ao carregar o dashboard. Verifique sua conexão ou as configurações de API.</div>
+      </AppLayout>
+    );
+  }
 
   return (
     <AppLayout>
@@ -57,7 +67,7 @@ const Index = () => {
           </div>
           <div className="flex flex-col gap-2 lg:items-end">
             <DashboardFilters
-              projects={projects}
+              projects={apiData.projects}
               projectId={projectId}
               period={period}
               onProjectChange={setProjectId}
@@ -80,7 +90,9 @@ const Index = () => {
               <CardTitle className="text-base">Evolução do portfólio</CardTitle>
             </CardHeader>
             <CardContent>
-              <PortfolioProgressChart data={dashboard.progress} />
+              <Suspense fallback={<div className="text-center py-8">Carregando gráfico…</div>}>
+                <PortfolioProgressChart data={dashboard.progress} />
+              </Suspense>
             </CardContent>
           </Card>
           <Card className="min-w-0">
@@ -88,7 +100,9 @@ const Index = () => {
               <CardTitle className="text-base">Previsão de entrega</CardTitle>
             </CardHeader>
             <CardContent>
-              <DeliveryForecastChart data={dashboard.forecast} onProjectSelect={setProjectId} />
+              <Suspense fallback={<div className="text-center py-8">Carregando gráfico…</div>}>
+                <DeliveryForecastChart data={dashboard.forecast} onProjectSelect={setProjectId} />
+              </Suspense>
             </CardContent>
           </Card>
         </div>
@@ -99,7 +113,9 @@ const Index = () => {
               <CardTitle className="text-base">Mapa de risco</CardTitle>
             </CardHeader>
             <CardContent>
-              <RiskMapChart data={dashboard.risk} onProjectSelect={setProjectId} />
+              <Suspense fallback={<div className="text-center py-8">Carregando gráfico…</div>}>
+                <RiskMapChart data={dashboard.risk} onProjectSelect={setProjectId} />
+              </Suspense>
             </CardContent>
           </Card>
           <Card className={`min-w-0 ${memberId ? 'border-primary/50' : ''}`} data-highlighted-member={memberId ?? undefined}>
@@ -112,7 +128,9 @@ const Index = () => {
               )}
             </CardHeader>
             <CardContent>
-              <WorkloadChart data={dashboard.workload} onMemberSelect={setMemberId} />
+              <Suspense fallback={<div className="text-center py-8">Carregando gráfico…</div>}>
+                <WorkloadChart data={dashboard.workload} onMemberSelect={setMemberId} />
+              </Suspense>
             </CardContent>
           </Card>
         </div>
