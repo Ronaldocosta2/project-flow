@@ -5,10 +5,29 @@ import { Input } from '@/components/ui/input';
 import { Switch } from '@/components/ui/switch';
 import { Button } from '@/components/ui/button';
 import { useTheme } from '@/components/theme-provider';
-import { Moon, Sun, Bell, User, Palette } from 'lucide-react';
+import { Moon, Sun, Bell, User, Palette, Zap } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { useApiConfig } from '@/contexts/ApiConfigContext';
 
 const Settings = () => {
   const { theme, setTheme } = useTheme();
+  const { config, setConfig } = useApiConfig();
+  const [baseUrl, setBaseUrl] = useState(config.baseUrl);
+  const [apiKey, setApiKey] = useState(config.apiKey);
+  const [emailAlerts, setEmailAlerts] = useState(true);
+  const [weeklySummary, setWeeklySummary] = useState(true);
+  const [pushNotifications, setPushNotifications] = useState(false);
+
+  // Sync with context changes
+  useEffect(() => {
+    setBaseUrl(config.baseUrl);
+    setApiKey(config.apiKey);
+  }, [config]);
+
+  const handleSave = () => {
+    setConfig({ baseUrl, apiKey });
+    alert('Configurações de API salvas.');
+  };
 
   return (
     <AppLayout>
@@ -92,8 +111,26 @@ const Settings = () => {
           </div>
         </Card>
 
+        {/* Integração API */}
+        <Card className="p-6">
+          <div className="flex items-center gap-2 mb-4">
+            <Zap className="h-5 w-5 text-primary" />
+            <h2 className="text-lg font-semibold text-foreground">Integração API</h2>
+          </div>
+          <div className="grid gap-4">
+            <div className="grid gap-2">
+              <Label htmlFor="baseUrl">Base URL</Label>
+              <Input id="baseUrl" placeholder="https://api.exemplo.com" value={baseUrl} onChange={e => setBaseUrl(e.target.value)} />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="apiKey">API Key</Label>
+              <Input id="apiKey" placeholder="Sua API Key" value={apiKey} onChange={e => setApiKey(e.target.value)} />
+            </div>
+          </div>
+        </Card>
+
         <div className="flex justify-end">
-          <Button>Salvar alterações</Button>
+          <Button onClick={handleSave}>Salvar alterações</Button>
         </div>
       </div>
     </AppLayout>
