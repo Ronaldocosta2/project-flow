@@ -30,7 +30,7 @@ function isDisposableEmail(email: string): boolean {
   return DISPOSABLE_DOMAINS.includes(domain);
 }
 
-const STORAGE_KEY = 'projectflow_signup_done';
+const STORAGE_KEY = 'athena_signup_done';
 
 const SignupPopup = () => {
   const [open, setOpen] = useState(false);
@@ -88,7 +88,7 @@ const SignupPopup = () => {
                   <Rocket className="w-6 h-6 text-primary" />
                 </div>
               </div>
-              <DialogTitle className="text-center text-xl">Bem-vindo ao Project Flow!</DialogTitle>
+              <DialogTitle className="text-center text-xl">Bem-vindo ao Athena!</DialogTitle>
               <DialogDescription className="text-center">
                 Cadastre-se para explorar a plataforma gratuitamente.
               </DialogDescription>
@@ -134,7 +134,7 @@ const SignupPopup = () => {
             <DialogHeader>
               <DialogTitle className="text-center text-xl">Cadastro realizado! 🎉</DialogTitle>
               <DialogDescription className="text-center">
-                Bem-vindo, {name.split(' ')[0]}! Agora você pode explorar o Project Flow.
+                Bem-vindo, {name.split(' ')[0]}! Agora você pode explorar o Athena.
               </DialogDescription>
             </DialogHeader>
             <Button onClick={() => setOpen(false)} className="w-full" size="lg">

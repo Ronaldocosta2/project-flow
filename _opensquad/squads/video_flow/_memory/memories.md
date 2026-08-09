@@ -1,4 +1,4 @@
-# Squad Memory: Projecterus Launch Squad
+# Squad Memory: Video Flow Squad
 
 ## Estilo de Escrita
 

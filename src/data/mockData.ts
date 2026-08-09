@@ -93,7 +93,7 @@ const makeTasks = (projectId: string): Task[] => {
 
 export const projects: Project[] = [
   {
-    id: '1', name: 'ProjectFlow MVP', description: 'Desenvolvimento da plataforma de gestão de projetos', status: 'at_risk',
+    id: '1', name: 'Athena MVP', description: 'Desenvolvimento da plataforma de gestão de projetos', status: 'at_risk',
     startDate: '2026-02-01', endDate: '2026-03-30', progress: 52,
     owner: teamMembers[0], members: [teamMembers[0], teamMembers[1], teamMembers[2], teamMembers[3], teamMembers[4], teamMembers[5]],
     tasks: makeTasks('1'), riskScore: 72, predictedEndDate: '2026-04-11', updatedAt: '2026-03-15',
@@ -197,6 +197,67 @@ export const getPriorityColor = (priority: TaskPriority) => {
   return map[priority];
 };
 
+
+export const getStatusColor = (status: ProjectStatus) => {
+  const map: Record<ProjectStatus, string> = {
+    on_track: 'text-success',
+    at_risk: 'text-warning',
+    delayed: 'text-destructive',
+    completed: 'text-muted-foreground',
+  };
+  return map[status];
+};
+
+export const getStatusBg = (status: ProjectStatus) => {
+  const map: Record<ProjectStatus, string> = {
+    on_track: 'bg-success/10 text-success',
+    at_risk: 'bg-warning/10 text-warning',
+    delayed: 'bg-destructive/10 text-destructive',
+    completed: 'bg-muted text-muted-foreground',
+  };
+  return map[status];
+};
+
+export const getStatusLabel = (status: ProjectStatus) => {
+  const map: Record<ProjectStatus, string> = {
+    on_track: 'No Prazo',
+    at_risk: 'Em Risco',
+    delayed: 'Atrasado',
+    completed: 'Concluído',
+  };
+  return map[status];
+};
+
+export const getTaskStatusLabel = (status: TaskStatus) => {
+  const map: Record<TaskStatus, string> = {
+    todo: 'A Fazer',
+    in_progress: 'Em Progresso',
+    in_review: 'Em Revisão',
+    done: 'Concluído',
+  };
+  return map[status];
+};
+
+export const getTaskStatusColor = (status: TaskStatus) => {
+  const map: Record<TaskStatus, string> = {
+    todo: 'bg-muted text-muted-foreground',
+    in_progress: 'bg-info/10 text-info',
+    in_review: 'bg-warning/10 text-warning',
+    done: 'bg-success/10 text-success',
+  };
+  return map[status];
+};
+
+export const getPriorityColor = (priority: TaskPriority) => {
+  const map: Record<TaskPriority, string> = {
+    low: 'bg-muted text-muted-foreground',
+    medium: 'bg-info/10 text-info',
+    high: 'bg-warning/10 text-warning',
+    critical: 'bg-destructive/10 text-destructive',
+  };
+  return map[priority];
+};
+
 export const getPriorityLabel = (priority: TaskPriority) => {
   const map: Record<TaskPriority, string> = {
     low: 'Baixa',
@@ -205,4 +266,79 @@ export const getPriorityLabel = (priority: TaskPriority) => {
     critical: 'Crítica',
   };
   return map[priority];
+};
+
+export type TicketStatus = 'open' | 'in_progress' | 'waiting' | 'resolved' | 'closed';
+
+export interface Ticket {
+  id: string;
+  title: string;
+  description: string;
+  status: TicketStatus;
+  priority: TaskPriority;
+  projectId?: string;
+  assignee?: TeamMember;
+  createdBy: TeamMember;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export const mockTickets: Ticket[] = [
+  {
+    id: 'TK-101',
+    title: 'Erro de acesso no Dashboard',
+    description: 'Alguns usuários reportaram erro 403 ao tentar acessar o dashboard principal.',
+    status: 'open',
+    priority: 'high',
+    projectId: '1',
+    createdBy: teamMembers[4],
+    createdAt: '2026-03-12T10:00:00Z',
+    updatedAt: '2026-03-12T10:00:00Z',
+  },
+  {
+    id: 'TK-102',
+    title: 'Atualizar logo na tela de login',
+    description: 'Precisamos trocar a logo antiga pela nova identidade visual.',
+    status: 'in_progress',
+    priority: 'medium',
+    projectId: '2',
+    assignee: teamMembers[2],
+    createdBy: teamMembers[0],
+    createdAt: '2026-03-10T14:30:00Z',
+    updatedAt: '2026-03-11T09:15:00Z',
+  },
+  {
+    id: 'TK-103',
+    title: 'Relatório mensal não foi gerado',
+    description: 'O cronjob de relatórios parece ter falhado neste último final de semana.',
+    status: 'resolved',
+    priority: 'critical',
+    projectId: '3',
+    assignee: teamMembers[5],
+    createdBy: teamMembers[1],
+    createdAt: '2026-03-08T08:00:00Z',
+    updatedAt: '2026-03-09T16:45:00Z',
+  }
+];
+
+export const getTicketStatusLabel = (status: TicketStatus) => {
+  const map: Record<TicketStatus, string> = {
+    open: 'Aberto',
+    in_progress: 'Em Andamento',
+    waiting: 'Aguardando',
+    resolved: 'Resolvido',
+    closed: 'Fechado',
+  };
+  return map[status];
+};
+
+export const getTicketStatusColor = (status: TicketStatus) => {
+  const map: Record<TicketStatus, string> = {
+    open: 'bg-destructive/10 text-destructive',
+    in_progress: 'bg-info/10 text-info',
+    waiting: 'bg-warning/10 text-warning',
+    resolved: 'bg-success/10 text-success',
+    closed: 'bg-muted text-muted-foreground',
+  };
+  return map[status];
 };

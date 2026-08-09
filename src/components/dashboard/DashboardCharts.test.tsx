@@ -27,7 +27,7 @@ vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockReturnValue({
 
 const forecast: DeliveryForecast = {
   projectId: '1',
-  projectName: 'ProjectFlow MVP',
+  projectName: 'Athena MVP',
   endDate: '2026-03-30',
   predictedEndDate: '2026-04-11',
   delayDays: 12,
@@ -38,7 +38,7 @@ const forecast: DeliveryForecast = {
 
 const risk: RiskPoint = {
   projectId: '1',
-  projectName: 'ProjectFlow MVP',
+  projectName: 'Athena MVP',
   owner: teamMembers[0],
   progress: 52,
   riskScore: 72,
@@ -98,14 +98,14 @@ describe('dashboard charts', () => {
     const onProjectSelect = vi.fn();
     render(<DeliveryForecastChart data={[forecast]} onProjectSelect={onProjectSelect} />);
 
-    fireEvent.click(screen.getByRole('button', { name: /selecionar projectflow mvp/i }));
+    fireEvent.click(screen.getByRole('button', { name: /selecionar athena mvp/i }));
 
     expect(onProjectSelect).toHaveBeenCalledWith('1');
   });
 
   it('shows forecast details on focus and removes the redundant chart focus stop', () => {
     render(<DeliveryForecastChart data={[forecast]} onProjectSelect={vi.fn()} />);
-    const control = screen.getByRole('button', { name: /selecionar projectflow mvp/i });
+    const control = screen.getByRole('button', { name: /selecionar athena mvp/i });
 
     fireEvent.focus(control);
 
@@ -145,7 +145,7 @@ describe('dashboard charts', () => {
     const onProjectSelect = vi.fn();
     const { container } = render(<RiskMapChart data={[risk]} onProjectSelect={onProjectSelect} />);
 
-    expect(screen.getByRole('button', { name: /projectflow mvp, risco 72%/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /athena mvp, risco 72%/i })).toBeInTheDocument();
     expect(screen.getByRole('list', { name: /legenda de status/i })).toBeInTheDocument();
     expect(screen.getByText('Em Risco')).toBeInTheDocument();
 

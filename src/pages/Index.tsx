@@ -20,6 +20,7 @@ import {
   Shield,
   Layers,
   ListChecks,
+  TrendingUp,
 } from 'lucide-react';
 
 /* ───────────────────── helpers ───────────────────── */
@@ -417,7 +418,135 @@ const Index = () => {
           </motion.div>
         </div>
 
-        {/* ══════════ BOTTOM ROW: Riscos ══════════ */}
+        {/* ══════════ MID ROW: Progresso dos Projetos ══════════ */}
+        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.22 }}>
+          <Card className="border-border/60">
+            <CardContent className="py-6">
+              <p className="mb-5 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                <TrendingUp className="h-3.5 w-3.5" /> Progresso dos Projetos
+              </p>
+
+              <div className="grid gap-6 lg:grid-cols-[1fr_300px]">
+                {/* ── Left: Horizontal bar ranking ── */}
+                <div className="flex flex-col gap-4">
+                  {[...filteredProjects]
+                    .sort((a, b) => b.progress - a.progress)
+                    .map((project, idx) => {
+                      const cfg = statusIcon[project.status];
+                      const StatusIcon = cfg.icon;
+                      const statusLabels: Record<ProjectStatus, string> = {
+                        on_track: 'No prazo',
+                        at_risk: 'Em risco',
+                        delayed: 'Atrasado',
+                        completed: 'Concluído',
+                      };
+                      return (
+                        <motion.div
+                          key={project.id}
+                          initial={{ opacity: 0, x: -12 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: idx * 0.06 }}
+                          className="group"
+                        >
+                          <div className="mb-1.5 flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-xs font-bold text-primary">
+                                {idx + 1}
+                              </span>
+                              <span className="text-sm font-semibold text-foreground">{project.name}</span>
+                              <span
+                                className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold"
+                                style={{ backgroundColor: cfg.bg, color: cfg.color }}
+                              >
+                                <StatusIcon className="h-3 w-3" />
+                                {statusLabels[project.status]}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-3">
+                              <span className="text-xs text-muted-foreground">{project.owner.name}</span>
+                              <span className="min-w-[48px] text-right text-sm font-bold text-foreground">
+                                {project.progress}%
+                              </span>
+                            </div>
+                          </div>
+                          <div className="relative h-4 w-full overflow-hidden rounded-full bg-muted">
+                            <motion.div
+                              className="absolute inset-y-0 left-0 rounded-full"
+                              style={{
+                                background: `linear-gradient(90deg, ${cfg.color}cc, ${cfg.color})`,
+                              }}
+                              initial={{ width: 0 }}
+                              animate={{ width: `${project.progress}%` }}
+                              transition={{ duration: 1, delay: idx * 0.08, ease: 'easeOut' }}
+                            />
+                            {/* Glow effect */}
+                            <motion.div
+                              className="absolute inset-y-0 left-0 rounded-full opacity-30 blur-sm"
+                              style={{ backgroundColor: cfg.color }}
+                              initial={{ width: 0 }}
+                              animate={{ width: `${project.progress}%` }}
+                              transition={{ duration: 1, delay: idx * 0.08, ease: 'easeOut' }}
+                            />
+                          </div>
+                        </motion.div>
+                      );
+                    })}
+                </div>
+
+                {/* ── Right: Summary donut ── */}
+                <div className="flex flex-col items-center justify-center gap-4 rounded-xl border border-border/40 bg-muted/30 p-5">
+                  <div className="relative h-36 w-36">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <PieChart>
+                        <Pie
+                          data={[...filteredProjects]
+                            .sort((a, b) => b.progress - a.progress)
+                            .map((p) => ({ name: p.name, value: p.progress }))}
+                          dataKey="value"
+                          cx="50%"
+                          cy="50%"
+                          innerRadius={38}
+                          outerRadius={60}
+                          startAngle={90}
+                          endAngle={-270}
+                          stroke="hsl(var(--background))"
+                          strokeWidth={2}
+                        >
+                          {[...filteredProjects]
+                            .sort((a, b) => b.progress - a.progress)
+                            .map((p) => (
+                              <Cell key={p.id} fill={statusIcon[p.status].color} />
+                            ))}
+                        </Pie>
+                      </PieChart>
+                    </ResponsiveContainer>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center">
+                      <span className="text-2xl font-bold text-foreground">{filteredProjects.length}</span>
+                      <span className="text-[10px] text-muted-foreground">projetos</span>
+                    </div>
+                  </div>
+
+                  {/* Legend */}
+                  <div className="flex flex-col gap-1.5 text-xs">
+                    {[...filteredProjects]
+                      .sort((a, b) => b.progress - a.progress)
+                      .map((p) => (
+                        <div key={p.id} className="flex items-center gap-2">
+                          <span
+                            className="h-2.5 w-2.5 rounded-full flex-shrink-0"
+                            style={{ backgroundColor: statusIcon[p.status].color }}
+                          />
+                          <span className="text-muted-foreground truncate max-w-[180px]">{p.name}</span>
+                          <span className="ml-auto font-bold text-foreground">{p.progress}%</span>
+                        </div>
+                      ))}
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}>
           <Card className="border-border/60">
             <CardContent className="py-6">

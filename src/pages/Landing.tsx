@@ -60,11 +60,11 @@ const Landing = () => (
   <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
     <header className="sticky top-0 z-30 border-b border-border/70 bg-background/90 backdrop-blur-xl">
       <div className="container mx-auto flex h-16 items-center justify-between gap-6 px-4 sm:px-6">
-        <a href="#inicio" className="flex shrink-0 items-center gap-2.5" aria-label="ProjectFlow — início">
+        <a href="#inicio" className="flex shrink-0 items-center gap-2.5" aria-label="Athena — início">
           <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-sm font-bold text-primary-foreground shadow-lg shadow-primary/20">
             PF
           </span>
-          <span className="text-lg font-bold tracking-tight">ProjectFlow</span>
+          <span className="text-lg font-bold tracking-tight">Athena</span>
         </a>
 
         <nav aria-label="Navegação principal" className="hidden items-center gap-7 text-sm text-muted-foreground md:flex">
@@ -118,7 +118,7 @@ const Landing = () => (
 
           <div
             role="img"
-            aria-label="Prévia do dashboard executivo do ProjectFlow"
+            aria-label="Prévia do dashboard executivo do Athena"
             aria-hidden="false"
             className="relative min-w-0 rounded-3xl border border-border bg-card p-3 shadow-2xl shadow-primary/10 sm:p-5"
           >
@@ -152,7 +152,7 @@ const Landing = () => (
                 </div>
                 <div className="mt-5 space-y-4">
                   {[
-                    ['ProjectFlow MVP', '78%', 'w-[78%]'],
+                    ['Athena MVP', '78%', 'w-[78%]'],
                     ['Portal do Cliente', '56%', 'w-[56%]'],
                     ['Automação Financeira', '41%', 'w-[41%]'],
                   ].map(([name, value, width]) => (
@@ -252,7 +252,7 @@ const Landing = () => (
           <div className="relative mx-auto max-w-2xl">
             <Target className="mx-auto h-10 w-10" aria-hidden="true" />
             <h2 className="mt-5 text-3xl font-bold tracking-tight sm:text-4xl">Veja seus projetos com mais clareza</h2>
-            <p className="mt-4 text-primary-foreground/80">Explore o ProjectFlow agora e descubra como uma visão consolidada simplifica o acompanhamento e a tomada de decisão.</p>
+            <p className="mt-4 text-primary-foreground/80">Explore o Athena agora e descubra como uma visão consolidada simplifica o acompanhamento e a tomada de decisão.</p>
             <Button size="lg" variant="secondary" asChild className="mt-8 h-12 px-6">
               <Link to="/dashboard">
                 Experimentar grátis
@@ -268,9 +268,9 @@ const Landing = () => (
       <div className="container mx-auto flex flex-col items-center justify-between gap-3 px-4 text-sm text-muted-foreground sm:flex-row sm:px-6">
         <div className="flex items-center gap-2 font-semibold text-foreground">
           <CheckCircle2 className="h-4 w-4 text-primary" aria-hidden="true" />
-          ProjectFlow
+          Athena
         </div>
-        <p>© 2026 ProjectFlow. Todos os direitos reservados.</p>
+        <p>© 2026 Athena. Todos os direitos reservados.</p>
       </div>
     </footer>
   </div>

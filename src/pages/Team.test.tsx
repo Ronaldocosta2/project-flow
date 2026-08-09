@@ -124,7 +124,7 @@ describe('Team allocation page', () => {
 
     fireEvent.click(triggers[0]);
     expect(screen.getAllByText('Implementar dashboard')).toHaveLength(2);
-    for (const link of screen.getAllByRole('link', { name: 'ProjectFlow MVP' })) {
+    for (const link of screen.getAllByRole('link', { name: 'Athena MVP' })) {
       expect(link).toHaveAttribute('href', '/projects/1');
     }
 

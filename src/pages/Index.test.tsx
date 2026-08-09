@@ -7,7 +7,7 @@ describe('executive dashboard', () => {
   it('filters the dashboard when a project is selected from a chart', () => {
     render(<MemoryRouter><Index /></MemoryRouter>);
     expect(screen.getByRole('heading', { name: 'Desempenho do portfólio' })).toBeInTheDocument();
-    fireEvent.click(screen.getByRole('button', { name: /^selecionar projectflow mvp$/i }));
+    fireEvent.click(screen.getByRole('button', { name: /^selecionar athena mvp$/i }));
     expect(screen.getByRole('button', { name: /limpar seleção/i })).toBeInTheDocument();
     expect(screen.getByText('1/1')).toBeInTheDocument();
   });
@@ -27,7 +27,7 @@ describe('executive dashboard', () => {
     expect(screen.getByText('Destaque: Pedro Oliveira')).toBeInTheDocument();
     expect(screen.getByText('2/4')).toBeInTheDocument();
 
-    fireEvent.click(screen.getByRole('button', { name: /^selecionar projectflow mvp$/i }));
+    fireEvent.click(screen.getByRole('button', { name: /^selecionar athena mvp$/i }));
     fireEvent.click(screen.getByRole('button', { name: /limpar seleção/i }));
     expect(screen.queryByText('Destaque: Pedro Oliveira')).not.toBeInTheDocument();
     expect(screen.getByText('2/4')).toBeInTheDocument();

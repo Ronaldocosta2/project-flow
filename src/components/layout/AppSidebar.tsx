@@ -1,5 +1,5 @@
 import { NavLink, useLocation } from 'react-router-dom';
-import { LayoutDashboard, FolderKanban, Users, Settings, Zap, Moon, Sun, PieChart } from 'lucide-react';
+import { LayoutDashboard, FolderKanban, Users, Settings, Zap, Moon, Sun, PieChart, LifeBuoy } from 'lucide-react';
 import { TimelineIcon } from '@/components/icons/TimelineIcon';
 import { cn } from '@/lib/utils';
 import { useTheme } from '@/components/theme-provider';
@@ -9,6 +9,7 @@ const navItems = [
   { to: '/projects', icon: FolderKanban, label: 'Projetos' },
   { to: '/timeline', icon: TimelineIcon, label: 'Timeline' },
   { to: '/team', icon: Users, label: 'Alocações' },
+  { to: '/tickets', icon: LifeBuoy, label: 'Tickets' },
   { to: '/financial-report', icon: PieChart, label: 'Relatório Financeiro' },
   { to: '/settings', icon: Settings, label: 'Configurações' },
 ];
@@ -25,7 +26,7 @@ const AppSidebar = () => {
           <Zap className="h-4 w-4 text-primary-foreground" />
         </div>
         <span className="hidden text-sm font-bold tracking-tight text-foreground lg:block">
-          ProjectFlow
+          Athena
         </span>
       </div>
 

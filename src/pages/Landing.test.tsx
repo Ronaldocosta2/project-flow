@@ -50,7 +50,7 @@ describe('Landing', () => {
   it('marca a prévia do produto como ilustração não interativa', () => {
     renderPage();
 
-    expect(screen.getByRole('img', { name: 'Prévia do dashboard executivo do ProjectFlow' })).toHaveAttribute('aria-hidden', 'false');
+    expect(screen.getByRole('img', { name: 'Prévia do dashboard executivo do Athena' })).toHaveAttribute('aria-hidden', 'false');
     expect(screen.queryByRole('button', { name: /alerta|progresso|alocação/i })).not.toBeInTheDocument();
   });
 

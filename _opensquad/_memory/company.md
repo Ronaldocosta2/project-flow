@@ -2,13 +2,13 @@
 
 ## Identity
 
-- **Company:** ProjectFlow
+- **Company:** Athena
 - **Website:** https://flow-smart-plan.lovable.app
 - **Sector:** SaaS de gestão de projetos
 
 ## Description
 
-ProjectFlow é uma plataforma de gestão de projetos focada em acompanhamento executivo, previsibilidade de entregas e identificação antecipada de riscos.
+Athena é uma plataforma de gestão de projetos focada em acompanhamento executivo, previsibilidade de entregas e identificação antecipada de riscos.
 
 ## Target Audience
 

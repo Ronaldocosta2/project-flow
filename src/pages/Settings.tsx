@@ -47,7 +47,7 @@ const Settings = () => {
           <div className="grid gap-4">
             <div className="grid gap-2">
               <Label htmlFor="name">Nome</Label>
-              <Input id="name" defaultValue="Usuário ProjectFlow" />
+              <Input id="name" defaultValue="Usuário Athena" />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
