@@ -40,14 +40,16 @@ const useDashboardData = () => {
 
   const fetchData = async (): Promise<DashboardData> => {
     const [projects, projectHistory, teamMembers] = await Promise.all([
-      api.get<Project[]>('/projects'),
-      api.get<ProjectHistory[]>('/project-history'),
-      api.get<TeamMember[]>('/team-members'),
+      api<Project[]>('GET', '/projects'),
+      api<ProjectHistory[]>('GET', '/project-history'),
+      api<TeamMember[]>('GET', '/team-members'),
     ]);
     return { projects, projectHistory, teamMembers };
   };
 
-  const query = useQuery<DashboardData, Error>(['dashboardData'], fetchData, {
+  const query = useQuery<DashboardData, Error>({
+    queryKey: ['dashboardData'],
+    queryFn: fetchData,
     staleTime: 5 * 60 * 1000,
     refetchOnWindowFocus: true,
   });
