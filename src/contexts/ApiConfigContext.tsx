@@ -11,8 +11,8 @@ interface ApiConfigContextProps {
 }
 
 const defaultConfig: ApiConfig = {
-  baseUrl: '',
-  apiKey: ''
+  baseUrl: 'http://localhost:20128/v1',
+  apiKey: 'sk-273f9f90362c27d8-o859cs-dae2c440'
 };
 
 const ApiConfigContext = createContext<ApiConfigContextProps | undefined>(undefined);

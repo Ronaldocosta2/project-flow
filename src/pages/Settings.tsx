@@ -120,7 +120,7 @@ const Settings = () => {
           <div className="grid gap-4">
             <div className="grid gap-2">
               <Label htmlFor="baseUrl">Base URL</Label>
-              <Input id="baseUrl" placeholder="https://api.exemplo.com" value={baseUrl} onChange={e => setBaseUrl(e.target.value)} />
+              <Input id="baseUrl" placeholder="http://localhost:20128/v1" value={baseUrl} onChange={e => setBaseUrl(e.target.value)} />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="apiKey">API Key</Label>
