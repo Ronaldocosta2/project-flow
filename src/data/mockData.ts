@@ -197,6 +197,18 @@ export const getPriorityColor = (priority: TaskPriority) => {
   return map[priority];
 };
 
+export const getPriorityLabel = (priority: TaskPriority) => {
+  const map: Record<TaskPriority, string> = {
+    low: 'Baixa',
+    medium: 'Média',
+    high: 'Alta',
+    critical: 'Crítica',
+  };
+  return map[priority];
+};
+
+
+
 export type TicketStatus = 'open' | 'in_progress' | 'waiting' | 'resolved' | 'closed';
 
 export interface Ticket {
