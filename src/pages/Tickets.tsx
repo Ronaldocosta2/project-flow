@@ -7,22 +7,28 @@ import { Search, Plus, Filter } from 'lucide-react';
 import { mockTickets, getTicketStatusLabel, getTicketStatusColor, getPriorityLabel, getPriorityColor, Ticket } from '@/data/mockData';
 import TicketDetail from '@/components/tickets/TicketDetail';
 
-const Tickets = () => {
+interface TicketsProps {
+  isEmbedded?: boolean;
+  projectId?: string;
+}
+
+const Tickets = ({ isEmbedded = false, projectId }: TicketsProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
 
   const filteredTickets = mockTickets.filter(ticket => 
-    ticket.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-    ticket.id.toLowerCase().includes(searchTerm.toLowerCase())
+    (projectId ? ticket.projectId === projectId : true) &&
+    (ticket.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+    ticket.id.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
-  return (
-    <AppLayout>
+  const content = (
+    <div className={isEmbedded ? "w-full" : ""}>
       <div className="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-foreground">Tickets</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Gerencie solicitações de suporte e demandas internas.
+            Gerencie solicitações de suporte e demandas {projectId ? 'deste espaço' : 'internas'}.
           </p>
         </div>
         <Button>
@@ -87,8 +93,10 @@ const Tickets = () => {
           onClose={() => setSelectedTicket(null)} 
         />
       )}
-    </AppLayout>
+    </div>
   );
+
+  return isEmbedded ? content : <AppLayout>{content}</AppLayout>;
 };
 
 export default Tickets;

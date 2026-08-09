@@ -8,12 +8,13 @@ import { projects, getStatusBg, getStatusLabel } from '@/data/mockData';
 import { cn } from '@/lib/utils';
 import { useState, useMemo } from 'react';
 import { recalculateSchedule } from '@/lib/schedule';
+import Tickets from '@/pages/Tickets';
 
 const ProjectDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const project = projects.find(p => p.id === id);
-  const [view, setView] = useState<'tasks' | 'gantt'>('tasks');
+  const [view, setView] = useState<'tasks' | 'gantt' | 'tickets'>('tasks');
 
   const recalculatedTasks = useMemo(() => {
     return project ? recalculateSchedule(project.tasks) : [];
@@ -90,13 +91,21 @@ const ProjectDetail = () => {
         >
           Timeline
         </button>
+        <button
+          onClick={() => setView('tickets')}
+          className={cn('rounded-md px-4 py-1.5 text-xs font-medium transition-colors', view === 'tickets' ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground')}
+        >
+          Tickets
+        </button>
       </div>
 
       {/* Content */}
       {view === 'tasks' ? (
         <TaskList tasks={recalculatedTasks} />
-      ) : (
+      ) : view === 'gantt' ? (
         <GanttChart />
+      ) : (
+        <Tickets isEmbedded projectId={project.id} />
       )}
     </AppLayout>
   );

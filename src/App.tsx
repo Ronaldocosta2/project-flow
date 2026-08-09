@@ -13,36 +13,38 @@ import Settings from "./pages/Settings";
 import Tickets from "./pages/Tickets";
 import NotFound from "./pages/NotFound";
 import { ThemeProvider } from "@/components/theme-provider";
-
 import Landing from "./pages/Landing";
 import { ApiConfigProvider } from "@/contexts/ApiConfigContext";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <ApiConfigProvider>
-      <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Landing />} />
-              <Route path="/dashboard" element={<Index />} />
-              <Route path="/projects" element={<Projects />} />
-              <Route path="/projects/:id" element={<ProjectDetail />} />
-              <Route path="/timeline" element={<Timeline />} />
-              <Route path="/team" element={<Team />} />
-              <Route path="/financial-report" element={<FinancialReport />} />
-              <Route path="/tickets" element={<Tickets />} />
-              <Route path="/settings" element={<Settings />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-        </TooltipProvider>
-      </ThemeProvider>
-    </ApiConfigProvider>
+    <AuthProvider>
+      <ApiConfigProvider>
+        <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Landing />} />
+                <Route path="/dashboard" element={<Index />} />
+                <Route path="/projects" element={<Projects />} />
+                <Route path="/projects/:id" element={<ProjectDetail />} />
+                <Route path="/timeline" element={<Timeline />} />
+                <Route path="/team" element={<Team />} />
+                <Route path="/financial-report" element={<FinancialReport />} />
+                <Route path="/tickets" element={<Tickets />} />
+                <Route path="/settings" element={<Settings />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </TooltipProvider>
+        </ThemeProvider>
+      </ApiConfigProvider>
+    </AuthProvider>
   </QueryClientProvider>
 );
 
